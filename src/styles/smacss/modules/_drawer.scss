@@ -1,0 +1,22 @@
+.drawer {
+  position: fixed;
+  top: $toolbar_height;
+  left: 0;
+  bottom: 0;
+  width: $drawer-width;
+  background: $floor-color;
+  box-shadow: 0 2px 2px rgba(0,0,0,.25);
+  padding-top: 10px;
+}
+
+.drawer--item {
+  display: block;
+  padding: 15px;
+  text-decoration: none !important;
+  transition: .15s;
+  cursor: pointer;
+  &:hover {
+    background: $highest-color;
+    color: $floor-color;
+  }
+}

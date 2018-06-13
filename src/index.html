@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <title>Simple Todo App</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <meta name="description" content="Dashboard app">
+    <meta name="theme-color" content="#3f51b5">
+</head>
+<body>
+
+<toolbar-element class="toolbar"></toolbar-element>
+
+<nav>
+    <drawer-element class="drawer"></drawer-element>
+</nav>
+
+<main class="l-viewport">
+    <todos-page></todos-page>
+    <about-page></about-page>
+</main>
+
+<script>
+    //ES5 Custom element adapter
+    (function () {
+        (() => {
+            'use strict';
+            if (!window.customElements) return;
+            const a = window.HTMLElement, b = window.customElements.define, c = window.customElements.get, d = new Map, e = new Map;
+            let f = !1, g = !1;
+            window.HTMLElement = function () {
+                if (!f) {
+                    const a = d.get(this.constructor), b = c.call(window.customElements, a);
+                    g = !0;
+                    const e = new b;
+                    return e
+                }
+                f = !1;
+            }, window.HTMLElement.prototype = a.prototype;
+            Object.defineProperty(window, 'customElements', {value: window.customElements, configurable: !0, writable: !0}), Object.defineProperty(window.customElements, 'define', {
+                value: (c, h) => {e
+                    const i = h.prototype, j = class extends a {
+                        constructor() {
+                            super(), Object.setPrototypeOf(this, i), g || (f = !0, h.call(this)), g = !1;
+                        }
+                    }, k = j.prototype;
+                    j.observedAttributes = h.observedAttributes, k.connectedCallback = i.connectedCallback, k.disconnectedCallback = i.disconnectedCallback, k.attributeChangedCallback = i.attributeChangedCallback, k.adoptedCallback = i.adoptedCallback, d.set(h, c), e.set(c, h), b.call(window.customElements, c, j);
+                }, configurable: !0, writable: !0
+            }), Object.defineProperty(window.customElements, 'get', {value: (a) => e.get(a), configurable: !0, writable: !0});
+        })();
+    }());
+</script>
+</body>
+</html>

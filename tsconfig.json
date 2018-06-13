@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "esnext",
+    "allowJs": true,
+    "checkJs": false,
+    "sourceMap": true,
+    "outDir": "./dist/",
+    "skipLibCheck": true,
+    "removeComments": true,
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "lib": ["es6", "dom"]
+  },
+  "exclude": [
+    "dist"
+  ]
+}

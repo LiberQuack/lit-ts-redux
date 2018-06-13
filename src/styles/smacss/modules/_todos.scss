@@ -1,0 +1,13 @@
+.todos {
+  padding-top: 15px;
+}
+
+.todos--input {
+  font-size: 17px;
+  color: $deepest-color;
+}
+
+.todos--items {
+  @extend .l-list-clean;
+  margin-top: 15px !important;
+}

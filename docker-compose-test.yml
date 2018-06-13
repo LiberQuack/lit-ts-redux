@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  chrome:
+    image: martinsthiago/chrome
+    ports:
+      - 5900:5900
+    command: |
+      sh -c '
+        while ! sh -c "busybox nc cafe 9505 > /dev/null 2>&1"; do echo "Waiting connection"; sleep 1; done;
+        google-chrome http://cafe:9505/browser/connect
+        while busybox nc cafe 9505; do sleep 1; done;
+        echo "Test finished"
+      '
+
+  cafe:
+    build:
+      dockerfile: Dockerfile-test
+      context: ./
+    environment:
+      - APP_URL=http://cafe:8080
+    command: |
+      sh -c 'npm run test:compose'

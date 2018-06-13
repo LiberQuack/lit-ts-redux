@@ -1,0 +1,14 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+}
+
+svg.icon, .icon--figure {
+  height: 1.3em;
+  width: 1.3em;
+  flex-grow: 0;
+}
+
+.icon--text {
+  margin-left: .75em;
+}

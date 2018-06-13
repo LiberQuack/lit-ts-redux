@@ -1,0 +1,21 @@
+//media-queries
+$tv-only: "only screen and (min-width: 1600px)";
+$mobile-only: "only screen and (max-width: 640px)";
+$desktop-only: "only screen and (min-width: 641px) and (max-width: 1599px)";
+$desktop-and-bigger: "only screen and (min-width: 641px)";
+
+//colors
+$font-color: #c3c3c3;
+$theme-color: #238cab;
+$highest-color: #b9b9b9;
+$floor-color: #474357;
+$deepest-color: #272630;
+
+//sizes
+$root-font-size: 16px;
+$drawer-width: 260px;
+$drawer-width-collapsed: 75px;
+$toolbar_height: 58px;
+
+//times
+$transition-time: .25s;
