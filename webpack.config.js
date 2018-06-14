@@ -83,8 +83,9 @@ module.exports = function (env = {}) {
         },
 
         output: {
-            chunkFilename: isProductionMode ? "[name].[hash:4].js" : "[name].js",
+            chunkFilename: isProductionMode ? "[name]-chunk.[hash:4].js" : "[name]-chunk.js",
             filename: isProductionMode ? "[name].[hash:4].js" : "[name].js",
+            publicPath: "/lit-ts-redux/" //TODO: Use .env files BASE_URL
         }
     };
 };
@@ -97,8 +98,8 @@ function getPlugins(isProductionMode) {
         new webpack.IgnorePlugin(/vertx/),
         new HtmlWebpackPlugin({template: "src/index.html"}),
         new Dotenv({
-            route: process.env.ENVIRONMENT ? `./src/scripts/_environment/${process.env.ENVIRONMENT}.env` : './src/scripts/_environment/local.env',
-            systemvars: true
+            path: process.env.ENVIRONMENT ? `./src/scripts/environment/${process.env.ENVIRONMENT}.env` : './src/scripts/environment/local.env',
+            systemvars: true,
         }),
         new webpack.DefinePlugin(isProductionMode ? {'process.env.NODE_ENV': JSON.stringify('production')} : {}),
         new ForkTsCheckerWebpackPlugin({
