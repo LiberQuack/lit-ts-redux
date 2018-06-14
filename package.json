@@ -7,7 +7,7 @@
     "start": "webpack-dashboard -m -- webpack-dev-server  --config webpack.config.js --open",
     "dist": "webpack --env.production=production --display-modules --config ./webpack.config.js",
     "dist:github": "ENVIRONMENT=github npm run dist",
-    "gh-pages": "ENVIRONMENT=github npm run dist; gh-pages -d dist",
+    "gh-pages": "npm run dist:github; gh-pages -d dist",
     "test": "testcafe $NODE_DEBUG_OPTION -e -s ./testcafe chrome ./src/ui-tests/**",
     "test:live": "testcafe-live -e -s ./testcafe chrome ./src/ui-tests/**",
     "test:compose": "http-server dist -s -p 8080 & testcafe -e --ports 9505,9506 remote:1 src/ui-tests/**"

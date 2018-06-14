@@ -15,8 +15,8 @@ const dotenvPath = process.env.ENVIRONMENT ?
     './src/scripts/environment/local.env';
 
 console.log(`Using ${dotenvPath} to set environment vars`);
-
 require('dotenv').config({path: dotenvPath});
+console.log("BASE_URL:", process.env.BASE_URL);
 
 module.exports = function (env = {}) {
 
