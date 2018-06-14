@@ -1,4 +1,5 @@
-const baseurl = process.env.BASE_URL;
+//Removes the last "/" from baseUrl
+const baseurl = process.env.BASE_URL.replace(/\/$/, "");
 
 export const settings = {
     app: {

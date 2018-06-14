@@ -10,6 +10,14 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
+const dotenvPath = process.env.ENVIRONMENT ?
+    `./src/scripts/environment/${process.env.ENVIRONMENT}.env` :
+    './src/scripts/environment/local.env';
+
+console.log(`Using ${dotenvPath} to set environment vars`);
+
+require('dotenv').config({path: dotenvPath});
+
 module.exports = function (env = {}) {
 
     const isProductionMode = env.production === "production";
@@ -85,7 +93,7 @@ module.exports = function (env = {}) {
         output: {
             chunkFilename: isProductionMode ? "[name]-chunk.[hash:4].js" : "[name]-chunk.js",
             filename: isProductionMode ? "[name].[hash:4].js" : "[name].js",
-            publicPath: "/lit-ts-redux/" //TODO: Use .env files BASE_URL
+            publicPath: process.env.BASE_URL,
         }
     };
 };
@@ -98,7 +106,7 @@ function getPlugins(isProductionMode) {
         new webpack.IgnorePlugin(/vertx/),
         new HtmlWebpackPlugin({template: "src/index.html"}),
         new Dotenv({
-            path: process.env.ENVIRONMENT ? `./src/scripts/environment/${process.env.ENVIRONMENT}.env` : './src/scripts/environment/local.env',
+            path: dotenvPath,
             systemvars: true,
         }),
         new webpack.DefinePlugin(isProductionMode ? {'process.env.NODE_ENV': JSON.stringify('production')} : {}),
