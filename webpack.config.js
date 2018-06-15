@@ -122,7 +122,10 @@ function getPlugins(isProductionMode) {
 
     if (isProductionMode) {
         return defaultPlugins.concat(
-            new UglifyJsPlugin({uglifyOptions: {dead_code: true,}}),
+            new UglifyJsPlugin({
+                uglifyOptions: {dead_code: true},
+                sourceMap: true,
+            }),
             new FaviconsWebpackPlugin('assets/favicon.png'),
         )
     } else {

@@ -1,4 +1,4 @@
-import '@webcomponents/webcomponentsjs/webcomponents-bundle';
+import "@webcomponents/webcomponentsjs/webcomponents-bundle";
 
 import "core-js/es6/symbol";
 
