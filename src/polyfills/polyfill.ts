@@ -8,7 +8,8 @@ export async function polyfillRunner() {
     }
 
     if (bowser.firefox || bowser.msedge) {
-        return await import("@webcomponents/webcomponentsjs/webcomponents-bundle");
+        await import("@webcomponents/webcomponentsjs/webcomponents-bundle");
+        return window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
     }
 
     //TODO: Add polyfills by feature detection
