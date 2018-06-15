@@ -8,6 +8,7 @@ export class TodoState {
         {title: "Do lazy loading", done: true},
         {title: "Add favicon.ico", done: true},
         {title: "Be Responsive", done: false},
+        {title: "Add Tests", done: false},
         {title: "Add Web Manifest", done: false},
         {title: "Work offline", done: false},
         {title: "Take a shower", done: false},

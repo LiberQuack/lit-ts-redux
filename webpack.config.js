@@ -36,7 +36,7 @@ module.exports = function (env = {}) {
             disableHostCheck: true,
         },
 
-        devtool: isProductionMode ? "source-map" : "eval-source-map",
+        devtool: "source-map",
 
         module: {
             rules: [{

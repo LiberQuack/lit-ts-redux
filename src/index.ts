@@ -1,5 +1,3 @@
-import "./styles/styles.scss";
-
 import {polyfillRunner} from "./polyfills/polyfill";
 
 async function loadPolyfills() {
