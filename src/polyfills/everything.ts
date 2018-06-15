@@ -1,4 +1,5 @@
 import '@webcomponents/webcomponentsjs/webcomponents-bundle';
+
 import "core-js/es6/symbol";
 
 import from from 'core-js/fn/array/from'
