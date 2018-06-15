@@ -4,12 +4,11 @@ import "core-js/es6/promise";
 export async function polyfillRunner() {
     if (bowser.msie && bowser.version <= 11) {
         await import("./everything");
-        window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
-        return;
+        return window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
     }
 
-    if (bowser.firefox) {
-        await import("@webcomponents/webcomponentsjs/webcomponents-bundle");
+    if (bowser.firefox || bowser.msedge) {
+        return await import("@webcomponents/webcomponentsjs/webcomponents-bundle");
     }
 
     //TODO: Add polyfills by feature detection
