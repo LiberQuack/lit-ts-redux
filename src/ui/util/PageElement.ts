@@ -7,7 +7,9 @@ export abstract class PageElement extends ReduxLitElement {
         super();
         this._visible = true;
         this._definePropertyAccessor("_visible");
-        this.classList.add("l-page", "e-fade", "e-from-left");
+        this.classList.add("l-page");
+        this.classList.add("e-fade");
+        this.classList.add("e-from-left");
     }
 
     protected abstract isVisible(state: RootState): boolean;

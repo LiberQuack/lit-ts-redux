@@ -24,19 +24,22 @@ document.addEventListener("click", (e) => {
             return;
         }
 
+        let state = window.history.state || {};
+
         // push state into the history stack
-        window.history.pushState(window.history.state, null, href);
+        window.history.pushState(state, null, href);
 
         // dispatch a popstate event
         try {
             window.dispatchEvent(new PopStateEvent('popstate', {
                 bubbles: false,
                 cancelable: false,
-                state: window.history.state
+                state
             }));
         } catch(error) {
             let evt = document.createEvent('CustomEvent');
-            evt.initCustomEvent('popstate', false, false, { state: window.history.state });
+            evt.initCustomEvent('popstate', false, false, { state });
+            (evt as any).state = state;
             window.dispatchEvent(evt);
         }
 

@@ -27,8 +27,8 @@ class TodosPage extends ModelHandlerMixin(PageElement) {
                 <form class="form" on-submit="${this.addTodo.bind(this)}">
                     <input class="todos--input form--floatinput l-width-100" 
                            placeholder="My todo is..."
-                           value="${this.get('todoInput')}"
-                           on-change="${this.set('todoInput', 'value')}">
+                           on-input="${this.set('todoInput', 'value')}"
+                           on-keydown="${this.set('todoInput', 'value')}">
                 </form>
                 <ul class="todos--items">
                     ${this._todos.map(todo => (html`
@@ -60,7 +60,7 @@ class TodosPage extends ModelHandlerMixin(PageElement) {
         const title = this.todoInput;
         if (!title) return console.log("No value to add todo");
         appState.dispatch(TodosActions.addTodo({title, done: false}));
-        this.todoInput = "";
+        this.querySelector("form").reset();
     }
 
     protected removeTodo(todo: Todo) {

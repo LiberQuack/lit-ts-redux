@@ -1,7 +1,8 @@
-import '@webcomponents/webcomponentsjs/webcomponents-bundle';
+import bowser from "bowser";
 
-import from from 'core-js/fn/array/from'
-import find from 'core-js/fn/array/find'
+//TODO: Add polyfills by feature detection
 
-Array.find = Array.find || find;
-Array.from = Array.from || from;
+if (bowser.msie) {
+    import("./polyfills/everything");
+    return
+}
