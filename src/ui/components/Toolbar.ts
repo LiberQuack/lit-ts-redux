@@ -36,11 +36,13 @@ class Toolbar extends LitElement {
                     flex-shrink: 0;
                 }
                 
+                ${`
                 svg {
                     width: 30px;
                     height: 30px;
                     vertical-align: middle;
                 }
+                `}
             </style>
             
             <div class="content">
