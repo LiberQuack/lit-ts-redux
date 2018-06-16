@@ -1,5 +1,4 @@
 import {html, LitElement} from "@polymer/lit-element";
-import {unsafeHTML} from "lit-html/lib/unsafe-html";
 
 const githubIcon = require("../../assets/github-icon.svg");
 
@@ -36,20 +35,21 @@ class Toolbar extends LitElement {
                     flex-shrink: 0;
                 }
                 
-                ${`
                 svg {
                     width: 30px;
                     height: 30px;
                     vertical-align: middle;
                 }
-                `}
             </style>
             
             <div class="content">
                 <span class="content--left">Simple Todo App</span>
                 <div class="content--right">
                     <a href="https://github.com/quackmartins/lit-ts-redux" target="_blank">
-                        ${unsafeHTML(githubIcon)}
+                        ${
+                            //TODO: Change it to unsafeStatic in the future
+                            html([githubIcon] as any)
+                        }
                     </a>
                 </div>
             </div>

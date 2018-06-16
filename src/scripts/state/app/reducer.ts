@@ -4,8 +4,8 @@ import {AppActionKeys} from "./actions";
 export class AppState {
     location = {
         route: "/",
-        params: null,
-        query : "",
+        parameters: {},
+        query : {},
         rawUrl: "/",
     }
 }

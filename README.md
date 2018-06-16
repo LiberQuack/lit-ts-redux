@@ -1,24 +1,34 @@
 # LitElement project boilerplate
-
-Project created using LitElement, Typescript and Redux
-
-**PR are welcome**
+Project created using LitElement, Typescript and Redux - [Demo](https://quackmartins.github.io/lit-ts-redux)
 *Consider starring the repo if it's helpful, That's the way I know you like it*
 
-## Npm Scripts (TODO: channge containers.env)
-|**npm script**   |**description**                                                   |
-|-----------------|------------------------------------------------------------------|
-|start            | Start and serve the app                                          |
-|start:containers | Start and serve the app using `containers.env`                   |
-|dist             | Bundle and optimize                                              |
-|dist:containers  | Bundle and optimize app using `containers.env`                   |
-|gh-pages         | Buandle and optmize... then commit `/dist` to `gh-pages` branch  |
-|test             | Run tests                                                        |
-|test:live        | Run tests with file watch                                        |
-|test:compose     | Used in docker-compose-test.yml                                  |
+This project comes with:
+  - Router implementation with lazy loading
+  - PageElement with simple transition
+  - Form handler helper
+  - Polyfills for older browsers
+  - Bundle analyzer
+
+## Run The Project
+Execute the commands bellow to run the app, I personally prefer to use [WebStorm](https://www.jetbrains.com/webstorm) for developing, but [VSCode](https://code.visualstudio.com/) (with [lit-html plugin](https://marketplace.visualstudio.com/items?itemName=bierner.lit-html)) could be used as well. Also I recommend using bash as the terminal 
+```bash
+npm install -g yarn
+yarn install
+yarn start
+```
+
+## Npm Scripts
+|**npm script**   |**description**                                                  |
+|-----------------|-----------------------------------------------------------------|
+|start            | Start and serve the app                                         |
+|dist             | Bundle and optimize                                             |
+|dist:github      | Bundle and optimize app using `github.env`                      |
+|gh-pages         | Bundle and optimize... then commit `/dist` to `gh-pages` branch |
+|test             | Run tests                                                       |
+|test:compose     | Used in docker-compose-test.yml                                 |
 
 ## Environment
-[dotenv-webpack](https://github.com/mrsteele/dotenv-webpack) was used for managing the environment, files are under `src/scripts/_enviroment`
+[dotenv-webpack](https://github.com/mrsteele/dotenv-webpack) was used for managing the environment, files are under `src/scripts/enviroment`
 
 |**Files**        |**Description**                                                                            |
 |-----------------|-------------------------------------------------------------------------------------------|

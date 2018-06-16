@@ -62,6 +62,10 @@
   version "9.6.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.6.21.tgz#4563c26a53531c5aca943065fcdf2dd562f63cd4"
 
+"@types/page@^1.5.32":
+  version "1.5.32"
+  resolved "https://registry.yarnpkg.com/@types/page/-/page-1.5.32.tgz#31b3796a2e279b1cad7a1fd99b7361692a1a0307"
+
 "@webassemblyjs/ast@1.5.10":
   version "1.5.10"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.5.10.tgz#7f1e81149ca4e103c9e7cc321ea0dcb83a392512"
@@ -6630,6 +6634,12 @@ p-try@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/p-try/-/p-try-1.0.0.tgz#cbc79cdbaf8fd4228e13f621f2b1a237c1b207b3"
 
+page@^1.8.6:
+  version "1.8.6"
+  resolved "https://registry.yarnpkg.com/page/-/page-1.8.6.tgz#b13f2cd27a9b9c1cac08cc27cd118548b51b826c"
+  dependencies:
+    path-to-regexp "~1.2.1"
+
 pako@~1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/pako/-/pako-1.0.6.tgz#0101211baa70c4bca4a0f63f2206e97b7dfaf258"
@@ -6779,6 +6789,12 @@ path-to-regexp@0.1.7:
 path-to-regexp@^1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.7.0.tgz#59fde0f435badacba103a84e9d3bc64e96b9937d"
+  dependencies:
+    isarray "0.0.1"
+
+path-to-regexp@~1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-1.2.1.tgz#b33705c140234d873c8721c7b9fd8b541ed3aff9"
   dependencies:
     isarray "0.0.1"
 

@@ -1,26 +1,26 @@
-import Esr from "esr/src/index"; //TODO: Find smaller router
-
-import "./_anchor-pushstate.ts";
+import page from "page";
 import {appState} from "./state/store";
-import {AppActions} from "./state/app/actions";
 import {settings} from "./environment/settings";
+import {AppActions} from "./state/app/actions";
+import Context = PageJS.Context;
+import {queryObjectMiddeware} from "./common/query-object-middleware";
 
-const router = new Esr();
-const routes = settings.app.routes;
-
-function setAppState(route, req) {
-    const {pathname, search} = router.getCurrentLocation();
-    appState.dispatch(AppActions.updateLocation(route, req.params || {}, req.queries, `${pathname}${search}`));
+function setAppState(route, req: Context) {
+    appState.dispatch(AppActions.updateLocation(route, req.params, req.query, req.path));
 }
 
-router.on(routes.root, async (req) => {
+const routes = settings.app.routes;
+
+page("*", queryObjectMiddeware);
+
+page(routes.root, async (req) => {
     setAppState(routes.root, req);
     await import("../ui/pages/TodosPage");
 });
 
-router.on(routes.about, async (req) => {
+page(routes.about, async (req) => {
     setAppState(routes.about, req);
     await import("../ui/pages/AboutPage")
 });
 
-router.start();
+page.start();

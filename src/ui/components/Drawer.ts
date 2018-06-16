@@ -8,6 +8,10 @@ class Drawer extends LitElement {
         return html`
             <a href$="${settings.app.routes.root}" class="drawer--item">Todos</a>
             <a href$="${settings.app.routes.about}" class="drawer--item">About</a>
+            
+            ${settings.environmentName === "gh" ? 
+                html`<a href$="${settings.app.routes.bundle}" class="drawer--item">Bundle Analyzes</a>` : ""
+            }
         `;
     }
 
