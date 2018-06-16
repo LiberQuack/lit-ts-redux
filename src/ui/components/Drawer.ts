@@ -10,7 +10,7 @@ class Drawer extends LitElement {
             <a href$="${settings.app.routes.about}" class="drawer--item">About</a>
             
             ${settings.environmentName === "gh" ? 
-                html`<a href$="${settings.app.routes.bundle}" class="drawer--item">Bundle Analyzes</a>` : ""
+                html`<a href$="${settings.app.routes.bundle}" class="drawer--item" target="_blank">Bundle Analyzes</a>` : ""
             }
         `;
     }

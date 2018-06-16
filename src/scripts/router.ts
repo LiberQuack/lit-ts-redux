@@ -15,12 +15,12 @@ page("*", queryObjectMiddeware);
 
 page(routes.root, async (req) => {
     setAppState(routes.root, req);
-    await import("../ui/pages/TodosPage");
+    await import(/* webpackChunkName: "TodosPage" */ "../ui/pages/TodosPage");
 });
 
 page(routes.about, async (req) => {
     setAppState(routes.about, req);
-    await import("../ui/pages/AboutPage")
+    await import(/* webpackChunkName: "AboutPage" */ "../ui/pages/AboutPage")
 });
 
 page.start();

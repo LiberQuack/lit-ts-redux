@@ -1,18 +1,16 @@
+import "promise-polyfill";
 import bowser from "bowser";
-import "core-js/es6/promise";
 
 export async function polyfillRunner() {
-    if (bowser.msie && bowser.version <= 11) {
-        await import("./everything");
-        return window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
+    let version = bowser.version;
+
+    if ((bowser.opera && version >= 41) ||
+        (bowser.chrome && version >= 54) ||
+        (bowser.safari && version >= 10.3)) {
+        return console.log("CustomElements fully supported");
     }
 
-    if (bowser.firefox || bowser.msedge) {
-        await import("@webcomponents/webcomponentsjs/webcomponents-bundle");
-        return window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
-    }
-
-    //TODO: Add polyfills by feature detection
-
-    //TODO: IE < 11... show browser not supported... throw error
+    console.log("CustomElements partially or not supported");
+    await import(/* webpackChunkName: "all-polyfills" */ "./everything");
+    return window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
 }

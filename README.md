@@ -5,6 +5,7 @@ Project created using LitElement, Typescript and Redux - [Demo](https://quackmar
 This project comes with:
   - Router implementation with lazy loading
   - PageElement with simple transition
+  - Redux Implementation
   - Form handler helper
   - Polyfills for older browsers
   - Bundle analyzer

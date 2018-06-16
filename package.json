@@ -23,6 +23,7 @@
     "esr": "^0.9.3",
     "lit-html": "^0.10.0",
     "page": "^1.8.6",
+    "promise-polyfill": "^8.0.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
   },
