@@ -1,5 +1,6 @@
 # LitElement project boilerplate
 Project created using LitElement, Typescript and Redux - [Demo](https://quackmartins.github.io/lit-ts-redux)
+
 *Consider starring the repo if it's helpful, That's the way I know you like it*
 
 This project comes with:
