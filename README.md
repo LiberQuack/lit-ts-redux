@@ -10,6 +10,7 @@ This project comes with:
   - Form handler helper
   - Polyfills for older browsers
   - Bundle analyzer
+  - E2E Testing solution with [cypress](https://www.cypress.io)
 
 ## Run The Project
 Execute the commands bellow to run the app, I personally prefer to use [WebStorm](https://www.jetbrains.com/webstorm) for developing, but [VSCode](https://code.visualstudio.com/) (with [lit-html plugin](https://marketplace.visualstudio.com/items?itemName=bierner.lit-html)) could be used as well. Also I recommend using bash as the terminal 
@@ -27,7 +28,7 @@ yarn start
 |dist:github      | Bundle and optimize app using `github.env`                      |
 |gh-pages         | Bundle and optimize... then commit `/dist` to `gh-pages` branch |
 |test             | Run tests                                                       |
-|test:compose     | Used in docker-compose-test.yml                                 |
+|test:headless    | Run tests (headless)                                            |
 
 ## Environment
 [dotenv-webpack](https://github.com/mrsteele/dotenv-webpack) was used for managing the environment, files are under `src/scripts/enviroment`

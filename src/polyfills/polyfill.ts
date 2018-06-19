@@ -1,5 +1,7 @@
-import "promise-polyfill";
+import PromisePolyfill from "promise-polyfill";
 import bowser from "bowser";
+
+(window as any).Promise = (window as any).Promise || PromisePolyfill;
 
 export async function polyfillRunner() {
     let version = bowser.version;

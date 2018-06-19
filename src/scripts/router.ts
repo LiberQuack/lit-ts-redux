@@ -2,8 +2,8 @@ import page from "page";
 import {appState} from "./state/store";
 import {settings} from "./environment/settings";
 import {AppActions} from "./state/app/actions";
-import Context = PageJS.Context;
 import {queryObjectMiddeware} from "./common/query-object-middleware";
+import Context = PageJS.Context;
 
 function setAppState(route, req: Context) {
     appState.dispatch(AppActions.updateLocation(route, req.params, req.query, req.path));
@@ -20,7 +20,7 @@ page(routes.root, async (req) => {
 
 page(routes.about, async (req) => {
     setAppState(routes.about, req);
-    await import(/* webpackChunkName: "AboutPage" */ "../ui/pages/AboutPage")
+    await import(/* webpackChunkName: "AboutPage" */ "../ui/pages/AboutPage");
 });
 
 page.start();

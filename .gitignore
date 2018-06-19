@@ -125,3 +125,6 @@ fabric.properties
 
 .awcache
 /.cache-loader/
+
+/cypress/videos/
+/cypress/screenshots/
