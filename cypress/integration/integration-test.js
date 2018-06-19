@@ -14,7 +14,7 @@ describe('Todo App Test', function () {
 
     it("Should set last todo to as done", () => {
         cy.visit(baseUrl)
-            .get("todo-item").last().click({force: true})
+            .get("todo-item").last().then(elm => elm[0].shadowRoot.querySelector(".item").click())
             .get("todo-item").last().should("have.prop", "done", true);
     });
 
@@ -32,6 +32,5 @@ describe('Todo App Test', function () {
                 elm[0].shadowRoot.querySelector(".action").click();
             })
             .get("todo-item").should("have.length", 7)
-            .window().screenshot("after");
     });
 });

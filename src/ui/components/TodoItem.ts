@@ -55,7 +55,7 @@ class TodoItem extends LitElement {
                 }
             </style>
             
-            <div class$="item ${classnames({isNotInited: !this.inited})}">
+            <div class$="item ${classnames({isNotInited: !this.inited})}" on-click="${this.dispatchDone.bind(this)}">
                 <div class$="item--content ${classnames({isDone: this.done})}">
                     <slot></slot>
                 </div>
@@ -68,7 +68,6 @@ class TodoItem extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('click', this.dispatchDone.bind(this));
     }
 
     _firstRendered(): void {
