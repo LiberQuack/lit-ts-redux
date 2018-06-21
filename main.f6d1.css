@@ -115,9 +115,10 @@ svg.icon,
   top: 0;
   right: 0;
   height: 58px;
-  background: #238cab;
+  background: #176880;
   box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
   z-index: 5;
+  color: #fff;
   font-size: 19px;
   padding: 0 15px;
 }
@@ -554,4 +555,4 @@ svg.icon,
 
 
 
-/*# sourceMappingURL=main.70f2.css.map*/
+/*# sourceMappingURL=main.f6d1.css.map*/
