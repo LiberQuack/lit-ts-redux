@@ -13,49 +13,25 @@ class Toolbar extends LitElement {
     _render(props) {
         //language=HTML
         return html`
-            <style>
-                :host {
-                    font-size: 19px;
-                    padding: 0 15px;
-                }
-                
-                .content {
-                    display: flex;
-                    align-items: center;
-                    height: 100%;
-                }
-                
-                .content--left {
-                    flex-grow: 1;
-                    flex-shrink: 1;
-                }
-                
-                .content--right {
-                    flex-grow: 0;
-                    flex-shrink: 0;
-                }
-                
-                svg {
-                    width: 30px;
-                    height: 30px;
-                    vertical-align: middle;
-                }
-            </style>
-            
-            <div class="content">
-                <span class="content--left">Simple Todo App</span>
-                <div class="content--right">
-                    <a href="https://github.com/quackmartins/lit-ts-redux" target="_blank">
-                        ${
+            <div class="toolbar--content">
+                <span class="toolbar--content--left">Simple Todo App</span>
+                <div class="toolbar--content--right">
+                    <a href="https://github.com/quackmartins/lit-ts-redux" 
+                       target="_blank"
+                       rel="noopener"
+                        aria-label="Github Link">${
                             //TODO: Change it to unsafeStatic in the future
                             html([githubIcon] as any)
-                        }
-                    </a>
+                    }</a>
                 </div>
             </div>
         `;
     }
 
+
+    protected _createRoot(): Element | DocumentFragment {
+        return this;
+    }
 }
 
 customElements.define("toolbar-element", Toolbar);

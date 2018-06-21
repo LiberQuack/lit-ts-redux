@@ -7,4 +7,30 @@
   background: $theme-color;
   box-shadow: 0 2px 2px rgba(0, 0, 0, .25);
   z-index: 5;
+  color: #fff;
+  font-size: 19px;
+  padding: 0 15px;
 }
+
+.toolbar--content {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.toolbar--content--left {
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+
+.toolbar--content--right {
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  svg {
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+}
+

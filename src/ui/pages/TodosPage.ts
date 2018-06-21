@@ -27,6 +27,7 @@ class TodosPage extends ModelHandlerMixin(PageElement) {
                 <form class="form" on-submit="${this.addTodo.bind(this)}">
                     <input class="todos--input form--floatinput l-width-100" 
                            placeholder="My todo is..."
+                           aria-label="Todo input text field"
                            on-input="${this.set('todoInput', 'value')}"
                            on-keydown="${this.set('todoInput', 'value')}">
                 </form>

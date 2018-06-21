@@ -8,7 +8,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
+const WebpackPwaManifest = require('webpack-pwa-manifest');
+const fs = require('fs');
+
+const webpackPwaMnifestConfig = JSON.parse(fs.readFileSync("src/webpack-pwa-manifest.json"));
 
 const dotenvPath = process.env.ENVIRONMENT ?
     `./src/scripts/environment/${process.env.ENVIRONMENT}.env` :
@@ -40,7 +43,7 @@ module.exports = function (env = {}) {
 
         module: {
             rules: [{
-                test: /\.(html|svg)$/,
+                test: /\.svg$/,
                 use: ['raw-loader']
             }, {
                 test: /(\.(js|ts)$)/,
@@ -104,7 +107,16 @@ function getPlugins(isProductionMode) {
         new BundleAnalyzerPlugin({analyzerMode: isProductionMode ? 'static' : 'server', defaultSizes: 'parsed'}),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.IgnorePlugin(/vertx/),
-        new HtmlWebpackPlugin({template: "src/index.html"}),
+        new HtmlWebpackPlugin({
+            title: webpackPwaMnifestConfig.name,
+            template: "src/index.html",
+            favicon: "src/assets/favicon.png",
+            minify: true,
+            meta: {
+                description: webpackPwaMnifestConfig.description
+            }
+        }),
+        new WebpackPwaManifest(webpackPwaMnifestConfig),
         new Dotenv({
             path: dotenvPath,
             systemvars: true,
@@ -129,8 +141,7 @@ function getPlugins(isProductionMode) {
                     },
                 },
                 sourceMap: true,
-            }),
-            new FaviconsWebpackPlugin('assets/favicon.png'),
+            })
         )
     } else {
         return defaultPlugins.concat(

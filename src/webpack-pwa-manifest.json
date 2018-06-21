@@ -1,0 +1,14 @@
+{
+  "name": "Lit Typescript Starter Kit",
+  "short_name": "LitStarter",
+  "description": "Project created using LitElement, Typescript, Redux and Webpack",
+  "background_color": "#fff",
+  "theme_color": "#238cab",
+  "ios": true,
+  "icons": [
+    {
+      "src": "src/assets/favicon.png",
+      "sizes": [64, 128, 256, 512]
+    }
+  ]
+}

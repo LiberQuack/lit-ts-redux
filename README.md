@@ -1,15 +1,15 @@
-# LitElement project boilerplate
-Project created using LitElement, Typescript and Redux - [Demo](https://quackmartins.github.io/lit-ts-redux)
+# Lit Typescript Starter Kit
+Project created using LitElement, Typescript, Redux and Webpack- [Demo](https://quackmartins.github.io/lit-ts-redux)
 
 *Consider starring the repo if it's helpful, That's the way I know you like it*
 
 This project comes with:
   - Router implementation with lazy loading
-  - PageElement with simple transition
+  - Page implementation with transition
   - Redux Implementation
   - Form handler helper
   - Polyfills for older browsers
-  - Bundle analyzer
+  - Bundle analyzer [report-html](https://quackmartins.github.io/lit-ts-redux/report.htlm)
   - E2E Testing solution with [cypress](https://www.cypress.io)
 
 ## Run The Project
