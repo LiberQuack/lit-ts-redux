@@ -10,6 +10,7 @@ const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
+const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const fs = require('fs');
 
 const webpackPwaMnifestConfig = JSON.parse(fs.readFileSync("src/webpack-pwa-manifest.json"));
@@ -136,6 +137,9 @@ function getPlugins(isProductionMode) {
             chunkFilename: isProductionMode ? "[name].[hash:4].css" : "[name].css"
         }),
         new WebpackPwaManifest(webpackPwaMnifestConfig),
+        new ScriptExtHtmlWebpackPlugin({
+            defaultAttribute: 'async'
+        }),
     ];
 
     if (isProductionMode) {
