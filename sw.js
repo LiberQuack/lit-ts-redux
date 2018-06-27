@@ -1,4 +1,4 @@
-importScripts("/lit-ts-redux/precache-manifest.3725e1ae1471d76e031da5278575fc8e.js", "/lit-ts-redux/workbox-v3.3.0/workbox-sw.js");
+importScripts("/lit-ts-redux/precache-manifest.c859b2726c927fb920fcfa77b44fa0fc.js", "/lit-ts-redux/workbox-v3.3.0/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/lit-ts-redux/workbox-v3.3.0"});
 //Wepback will import workbox and preachemanifest here;
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
