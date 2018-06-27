@@ -1,18 +1,13 @@
 import PromisePolyfill from "promise-polyfill";
-import bowser from "bowser";
 
 (window as any).Promise = (window as any).Promise || PromisePolyfill;
 
 export async function polyfillRunner() {
-    let version = bowser.version;
-
-    if ((bowser.opera && version >= 41) ||
-        (bowser.chrome && version >= 54) ||
-        (bowser.safari && version >= 10.3)) {
-        return console.log("CustomElements fully supported");
+    if ('customElements' in window) {
+        return console.log("CustomElements supported");
     }
 
-    console.log("CustomElements partially or not supported");
+    console.log("CustomElements not supported... downloading polyfills");
     await import(/* webpackChunkName: "all-polyfills" */ "./everything");
-    return window.dispatchEvent(new CustomEvent("DOMContentLoaded"));
+    return (window as any).dispatchEvent(new CustomEvent("DOMContentLoaded"));
 }

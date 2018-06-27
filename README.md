@@ -21,14 +21,14 @@ yarn start
 ```
 
 ## Npm Scripts
-|**npm script**   |**description**                                                  |
-|-----------------|-----------------------------------------------------------------|
-|start            | Start and serve the app                                         |
-|dist             | Bundle and optimize                                             |
-|dist:github      | Bundle and optimize app using `github.env`                      |
-|gh-pages         | Bundle and optimize... then commit `/dist` to `gh-pages` branch |
-|test             | Run tests                                                       |
-|test:headless    | Run tests (headless)                                            |
+|**npm script**               |**description**                                                  |
+|-----------------------------|-----------------------------------------------------------------|
+|npm run **start**            | Start and serve the app                                         |
+|npm run **dist**             | Bundle and optimize                                             |
+|npm run **dist:github**      | Bundle and optimize app using `github.env`                      |
+|npm run **gh-pages**         | Bundle and optimize... then commit `/dist` to `gh-pages` branch |
+|npm run **test**             | Run tests                                                       |
+|npm run **test:headless**    | Run tests (headless)                                            |
 
 ## Environment
 [dotenv-webpack](https://github.com/mrsteele/dotenv-webpack) was used for managing the environment, files are under `src/scripts/enviroment`

@@ -9,6 +9,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const DashboardPlugin = require('webpack-dashboard/plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+const {InjectManifest} = require('workbox-webpack-plugin');
 const fs = require('fs');
 
 const webpackPwaMnifestConfig = JSON.parse(fs.readFileSync("src/webpack-pwa-manifest.json"));
@@ -105,8 +106,17 @@ function getPlugins(isProductionMode) {
     const defaultPlugins = [
         new DashboardPlugin(),
         new BundleAnalyzerPlugin({analyzerMode: isProductionMode ? 'static' : 'server', defaultSizes: 'parsed'}),
+        new webpack.DefinePlugin(isProductionMode ? {'process.env.NODE_ENV': JSON.stringify('production')} : {}),
         new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
         new webpack.IgnorePlugin(/vertx/),
+        new ForkTsCheckerWebpackPlugin({
+            tsconfig: path.resolve(__dirname, 'tsconfig.json'),
+            watch: ['./src'],
+        }),
+        new Dotenv({
+            path: dotenvPath,
+            systemvars: true,
+        }),
         new HtmlWebpackPlugin({
             title: webpackPwaMnifestConfig.name,
             template: "src/index.html",
@@ -116,20 +126,16 @@ function getPlugins(isProductionMode) {
                 description: webpackPwaMnifestConfig.description
             }
         }),
-        new WebpackPwaManifest(webpackPwaMnifestConfig),
-        new Dotenv({
-            path: dotenvPath,
-            systemvars: true,
-        }),
-        new webpack.DefinePlugin(isProductionMode ? {'process.env.NODE_ENV': JSON.stringify('production')} : {}),
-        new ForkTsCheckerWebpackPlugin({
-            tsconfig: path.resolve(__dirname, 'tsconfig.json'),
-            watch: ['./src'],
+        new InjectManifest({
+            swSrc: "./src/sw-webpack-template.js",
+            swDest: "sw.js",
+            importWorkboxFrom: isProductionMode ? "local" : "cdn",
         }),
         new MiniCssExtractPlugin({
             filename: isProductionMode ? "[name].[hash:4].css" : "[name].css",
             chunkFilename: isProductionMode ? "[name].[hash:4].css" : "[name].css"
         }),
+        new WebpackPwaManifest(webpackPwaMnifestConfig),
     ];
 
     if (isProductionMode) {

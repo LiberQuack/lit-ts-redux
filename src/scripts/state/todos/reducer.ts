@@ -9,8 +9,8 @@ export class TodoState {
         {title: "Add favicon.ico", done: true},
         {title: "Add Tests", done: true},
         {title: "Add Web Manifest", done: true},
+        {title: "Work offline", done: true},
         {title: "Be Responsive", done: false},
-        {title: "Work offline", done: false},
         {title: "Inline some styles", done: false},
         {title: "Take a shower", done: false},
     ];
