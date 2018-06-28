@@ -3,6 +3,10 @@
   will-change: transform, opacity;
 }
 
+%e-fade-is-visible {
+  opacity: 1;
+}
+
 .e-fade {
   @extend %e-transition;
   opacity: 0;

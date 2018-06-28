@@ -11,7 +11,9 @@ const DashboardPlugin = require('webpack-dashboard/plugin');
 const WebpackPwaManifest = require('webpack-pwa-manifest');
 const {InjectManifest} = require('workbox-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
-const AsyncStylesheetWebpackPlugin = require('async-stylesheet-webpack-plugin');
+const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+
 const fs = require('fs');
 
 const webpackPwaMnifestConfig = JSON.parse(fs.readFileSync("src/webpack-pwa-manifest.json"));
@@ -29,7 +31,11 @@ module.exports = function (env = {}) {
     const isProductionMode = env.production === "production";
 
     return {
-        entry: './src/index.ts',
+
+        entry: {
+            main: './src/index.ts',
+            criticalPath: './src/styles/critical-path.scss'
+        },
 
         devServer: {
             contentBase: './src',
@@ -124,10 +130,12 @@ function getPlugins(isProductionMode) {
             template: "src/index.html",
             favicon: "src/assets/favicon.png",
             minify: true,
+            excludeAssets: [/main.*\.css/],
             meta: {
                 description: webpackPwaMnifestConfig.description
             }
         }),
+        new HtmlWebpackExcludeAssetsPlugin(),
         new InjectManifest({
             swSrc: "./src/sw-webpack-template.js",
             swDest: "sw.js",
@@ -138,9 +146,6 @@ function getPlugins(isProductionMode) {
             chunkFilename: isProductionMode ? "[name].[hash:4].css" : "[name].css"
         }),
         new WebpackPwaManifest(webpackPwaMnifestConfig),
-        new AsyncStylesheetWebpackPlugin({
-            noscriptFallback: false
-        }),
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'async'
         }),
@@ -155,8 +160,9 @@ function getPlugins(isProductionMode) {
                     },
                 },
                 sourceMap: true,
-            })
-        )
+            }),
+            new OptimizeCSSAssetsPlugin()
+        );
     } else {
         return defaultPlugins.concat(
             new webpack.HotModuleReplacementPlugin(),
