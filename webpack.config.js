@@ -13,6 +13,7 @@ const {InjectManifest} = require('workbox-webpack-plugin');
 const ScriptExtHtmlWebpackPlugin = require('script-ext-html-webpack-plugin');
 const HtmlWebpackExcludeAssetsPlugin = require('html-webpack-exclude-assets-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 const fs = require('fs');
 
@@ -130,12 +131,15 @@ function getPlugins(isProductionMode) {
             template: "src/index.html",
             favicon: "src/assets/favicon.png",
             minify: true,
-            excludeAssets: [/main.*\.css/],
+            excludeAssets: [/main.*\.css/, /criticalPath.*\.js/],
+            inlineSource: '.(css)$',
             meta: {
                 description: webpackPwaMnifestConfig.description
             }
         }),
+        new WebpackPwaManifest(webpackPwaMnifestConfig),
         new HtmlWebpackExcludeAssetsPlugin(),
+        new HtmlWebpackInlineSourcePlugin(),
         new InjectManifest({
             swSrc: "./src/sw-webpack-template.js",
             swDest: "sw.js",
@@ -145,7 +149,6 @@ function getPlugins(isProductionMode) {
             filename: isProductionMode ? "[name].[hash:4].css" : "[name].css",
             chunkFilename: isProductionMode ? "[name].[hash:4].css" : "[name].css"
         }),
-        new WebpackPwaManifest(webpackPwaMnifestConfig),
         new ScriptExtHtmlWebpackPlugin({
             defaultAttribute: 'async'
         }),

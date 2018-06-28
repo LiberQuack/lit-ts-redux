@@ -1859,7 +1859,7 @@ classnames@^2.2.5:
   version "2.2.5"
   resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.2.5.tgz#fb3801d453467649ef3603c7d61a02bd129bde6d"
 
-clean-css@4.1.x, clean-css@^4.1.9:
+clean-css@4.1.x:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.1.11.tgz#2ecdf145aba38f54740f26cefd0ff3e03e125d6a"
   dependencies:
@@ -4525,6 +4525,14 @@ html-minifier@^3.2.3:
 html-webpack-exclude-assets-plugin@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/html-webpack-exclude-assets-plugin/-/html-webpack-exclude-assets-plugin-0.0.7.tgz#ee69906adb3d869e4e29f29b0f3e99b53fa87c99"
+
+html-webpack-inline-source-plugin@^0.0.10:
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/html-webpack-inline-source-plugin/-/html-webpack-inline-source-plugin-0.0.10.tgz#89bd5f761e4f16902aa76a44476eb52831c9f7f0"
+  dependencies:
+    escape-string-regexp "^1.0.5"
+    slash "^1.0.0"
+    source-map-url "^0.4.0"
 
 html-webpack-plugin@jantimon/html-webpack-plugin:
   version "3.2.0"
@@ -8845,13 +8853,6 @@ strip-outer@^1.0.0:
 strip-url-auth@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/strip-url-auth/-/strip-url-auth-1.0.1.tgz#22b0fa3a41385b33be3f331551bbb837fa0cd7ae"
-
-style-ext-html-webpack-plugin@^3.4.7:
-  version "3.4.7"
-  resolved "https://registry.yarnpkg.com/style-ext-html-webpack-plugin/-/style-ext-html-webpack-plugin-3.4.7.tgz#fbd023f827bdadd211bc82305c52fd56ac9f9a39"
-  dependencies:
-    clean-css "^4.1.9"
-    debug "^3.1.0"
 
 style-loader@^0.19.0:
   version "0.19.1"
