@@ -1,4 +1,5 @@
-//Wepback will import workbox and preachemanifest here;
+//Wepback will import workbox and pre-cache manifest here
+
 workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
 
 workbox.routing.registerRoute(
