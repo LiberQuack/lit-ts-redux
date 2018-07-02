@@ -1,20 +1,30 @@
 import {html, LitElement} from "@polymer/lit-element";
+import {appState} from "../../scripts/state/store";
+import {AppActions} from "../../scripts/state/app/actions";
 
+const menuSvg = require("../../assets/baseline-menu.svg");
 const githubIcon = require("../../assets/github-icon.svg");
 
 class Toolbar extends LitElement {
 
-    static get properties() {
-        return {
-            foo: String
-        }
+    constructor() {
+        super();
+        const drawerIconTemplate = html([menuSvg] as any );
+        this.iconElement = drawerIconTemplate.getTemplateElement().content.querySelector('svg');
+        this.iconElement.addEventListener('click', () => {
+            appState.dispatch(AppActions.toggleDrawer());
+        })
     }
 
     _render(props) {
         //language=HTML
+
         return html`
             <div class="toolbar--content">
-                <span class="toolbar--content--left">Simple Todo App</span>
+                ${this.iconElement}
+                <div class="toolbar--content--left">
+                    Simple Todo App
+                </div>
                 <div class="toolbar--content--right">
                     <a href="https://github.com/quackmartins/lit-ts-redux" 
                        target="_blank"

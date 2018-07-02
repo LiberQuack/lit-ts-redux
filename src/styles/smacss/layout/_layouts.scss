@@ -184,3 +184,9 @@
   left: 0;
   right: 0;
 }
+
+@media #{$mobile-only} {
+  .l-viewport {
+    left: 0;
+  }
+}

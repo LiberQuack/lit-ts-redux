@@ -9,6 +9,6 @@ import "./ui/components/Toolbar";
 import "./ui/components/Drawer";
 
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register(`${settings.app.routes.root}sw.js`)
+    navigator.serviceWorker.register(`${settings.app.routes.root}service-worker.js`)
         .then(() => console.log("We work offline"));
 }

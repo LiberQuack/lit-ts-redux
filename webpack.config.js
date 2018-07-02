@@ -140,11 +140,6 @@ function getPlugins(isProductionMode) {
         new WebpackPwaManifest(webpackPwaMnifestConfig),
         new HtmlWebpackExcludeAssetsPlugin(),
         new HtmlWebpackInlineSourcePlugin(),
-        new InjectManifest({
-            swSrc: "./src/sw-webpack-template.js",
-            swDest: "sw.js",
-            importWorkboxFrom: isProductionMode ? "local" : "cdn",
-        }),
         new MiniCssExtractPlugin({
             filename: isProductionMode ? "[name].[hash:4].css" : "[name].css",
             chunkFilename: isProductionMode ? "[name].[hash:4].css" : "[name].css"
@@ -164,7 +159,12 @@ function getPlugins(isProductionMode) {
                 },
                 sourceMap: true,
             }),
-            new OptimizeCSSAssetsPlugin()
+            new OptimizeCSSAssetsPlugin(),
+            new InjectManifest({
+                swSrc: "./src/service-worker.js",
+                swDest: "service-worker.js",
+                importWorkboxFrom: isProductionMode ? "local" : "cdn",
+            })
         );
     } else {
         return defaultPlugins.concat(

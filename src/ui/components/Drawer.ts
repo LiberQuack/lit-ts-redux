@@ -1,7 +1,9 @@
 import {html, LitElement} from "@polymer/lit-element";
 import {settings} from "../../scripts/environment/settings";
+import {ReduxLitElement} from "../util/ReduxLitElement";
+import {RootState} from "../../scripts/state/store";
 
-class Drawer extends LitElement {
+class Drawer extends ReduxLitElement {
 
     _render(props) {
         //language=HTML
@@ -17,6 +19,14 @@ class Drawer extends LitElement {
 
     protected _createRoot(): Element | DocumentFragment {
         return this;
+    }
+
+    stateReceiver(state: RootState): void {
+        if (state.app.ui.drawer_open) {
+            this.classList.add("isVisible");
+        } else {
+            this.classList.remove("isVisible");
+        }
     }
 }
 

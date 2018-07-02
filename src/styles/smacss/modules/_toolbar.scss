@@ -1,3 +1,5 @@
+$color: #fff;
+
 .toolbar {
   position: fixed;
   left: 0;
@@ -5,9 +7,9 @@
   right: 0;
   height: $toolbar_height;
   background: $theme-color;
-  box-shadow: 0 2px 2px rgba(0, 0, 0, .25);
-  z-index: 5;
-  color: #fff;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, .5);
+  z-index: 20;
+  color: $color;
   font-size: 19px;
   padding: 0 15px;
 }
@@ -16,6 +18,10 @@
   display: flex;
   align-items: center;
   height: 100%;
+
+  > svg {
+    @extend .l-desktop-and-bigger-hide;
+  }
 }
 
 .toolbar--content--left {
@@ -34,3 +40,25 @@
   }
 }
 
+@media #{$mobile-only} {
+  .toolbar {
+    padding-left: 0;
+  }
+
+  .toolbar--content {
+    padding-left: $toolbar_height;
+
+    > svg {
+      $svgSize: 24px;
+      cursor: pointer;
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      fill: $color;
+      width: $toolbar_height;
+      height: $toolbar_height;
+      padding: (($toolbar_height - $svgSize) / 2);
+    }
+  }
+}

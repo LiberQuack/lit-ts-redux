@@ -9,6 +9,7 @@ This project comes with:
   - Redux Implementation
   - Form handler helper
   - Polyfills for older browsers
+  - Offline support
   - Bundle analyzer [report-html](https://quackmartins.github.io/lit-ts-redux/report.htlm)
   - E2E Testing solution with [cypress](https://www.cypress.io)
 

@@ -5,6 +5,7 @@ import {AnyAction, applyMiddleware, combineReducers, compose, createStore} from 
 import {appReducer as app, AppState} from "./app/reducer";
 import {DefaultThunkAction} from "../common/types";
 import {todoReducer as todo, TodoState} from "./todos/reducer";
+import {loadState, saveState} from "./state-saver";
 
 export type RootState = {
     todo: TodoState,
@@ -24,7 +25,17 @@ const enhancer = composeEnhancers(
 
 const store = createStore<RootState, AnyAction, {dispatch: (action: DefaultThunkAction) => {}}, {}>(
     reducers,
+    loadState(),
     enhancer
 );
+
+//Save redux to localStorage
+store.subscribe(() => {
+    const state = store.getState();
+    const offlineState = <RootState>{
+        todo: state.todo
+    };
+    saveState(offlineState);
+});
 
 export {store as appState};
