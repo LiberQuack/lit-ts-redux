@@ -2,12 +2,11 @@
 
 if (self.workbox) {
 
+    const indexHtml = self.__precacheManifest.find(it => it.url.indexOf('/index.html') > -1);
+
     workbox.skipWaiting();
-
     workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
-
-    workbox.routing.registerNavigationRoute(process.env.BASE_URL);
-
+    workbox.routing.registerNavigationRoute(indexHtml.url);
     workbox.routing.registerRoute(
         /\.(?:png|gif|jpg|jpeg|svg)$/,
         workbox.strategies.cacheFirst({
