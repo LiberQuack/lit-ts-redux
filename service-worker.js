@@ -1,10 +1,14 @@
-importScripts("/lit-ts-redux/precache-manifest.8b485771f71dbf8a35a482479636c145.js", "/lit-ts-redux/workbox-v3.3.0/workbox-sw.js");
+importScripts("/lit-ts-redux/precache-manifest.538d62891b633c5adf91e192e13e4c81.js", "/lit-ts-redux/workbox-v3.3.0/workbox-sw.js");
 workbox.setConfig({modulePathPrefix: "/lit-ts-redux/workbox-v3.3.0"});
 //Wepback will import workbox and pre-cache manifest here
 
 if (self.workbox) {
 
+    workbox.skipWaiting();
+
     workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+
+    workbox.routing.registerNavigationRoute('/index.html');
 
     workbox.routing.registerRoute(
         /\.(?:png|gif|jpg|jpeg|svg)$/,
