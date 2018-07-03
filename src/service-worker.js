@@ -2,7 +2,11 @@
 
 if (self.workbox) {
 
+    workbox.skipWaiting();
+
     workbox.precaching.precacheAndRoute(self.__precacheManifest || []);
+
+    workbox.routing.registerNavigationRoute(process.env.BASE_URL);
 
     workbox.routing.registerRoute(
         /\.(?:png|gif|jpg|jpeg|svg)$/,
