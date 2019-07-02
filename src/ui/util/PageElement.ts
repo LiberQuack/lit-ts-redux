@@ -1,5 +1,5 @@
 import {ReduxLitElement} from "./ReduxLitElement";
-import {RootState} from "../../scripts/state/store";
+import {RootState} from "../../application/state/store";
 
 export abstract class PageElement extends ReduxLitElement {
 

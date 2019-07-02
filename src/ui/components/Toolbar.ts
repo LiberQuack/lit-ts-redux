@@ -1,6 +1,6 @@
 import {html, LitElement} from "@polymer/lit-element";
-import {appState} from "../../scripts/state/store";
-import {AppActions} from "../../scripts/state/app/actions";
+import {appState} from "../../application/state/store";
+import {AppActions} from "../../application/state/app/actions";
 
 const menuSvg = require("../../assets/baseline-menu.svg");
 const githubIcon = require("../../assets/github-icon.svg");

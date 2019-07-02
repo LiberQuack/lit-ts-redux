@@ -1,7 +1,7 @@
 import {html, LitElement} from "@polymer/lit-element";
-import {settings} from "../../scripts/environment/settings";
+import {settings} from "../../application/environment/settings";
 import {ReduxLitElement} from "../util/ReduxLitElement";
-import {RootState} from "../../scripts/state/store";
+import {RootState} from "../../application/state/store";
 
 class Drawer extends ReduxLitElement {
 

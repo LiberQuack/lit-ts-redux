@@ -1,10 +1,10 @@
-import {settings} from "./scripts/environment/settings";
+import {settings} from "./application/environment/settings";
 
 import "./styles/styles.scss";
 import "./styles/critical-path.scss";
 
-import "./scripts/state/store";
-import "./scripts/router";
+import "./application/state/store";
+import "./application/router";
 import "./ui/components/Toolbar";
 import "./ui/components/Drawer";
 
