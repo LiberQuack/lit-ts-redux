@@ -1,5 +1,5 @@
 import {LitElement} from "@polymer/lit-element";
-import {appState, RootState} from "../../application/state/store";
+import {appState, RootState} from "../../core/state/store";
 
 export abstract class ReduxLitElement extends LitElement {
 

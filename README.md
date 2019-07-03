@@ -14,7 +14,7 @@ This project comes with:
   - E2E Testing solution with [cypress](https://www.cypress.io)
 
 ## Run The Project
-Execute the commands bellow to run the app, I personally prefer to use [WebStorm](https://www.jetbrains.com/webstorm) for developing, but [VSCode](https://code.visualstudio.com/) (with [lit-html plugin](https://marketplace.visualstudio.com/items?itemName=bierner.lit-html)) could be used as well. Also I recommend using bash as the terminal 
+Execute the commands bellow to run the application, I personally prefer to use [WebStorm](https://www.jetbrains.com/webstorm) for developing, but [VSCode](https://code.visualstudio.com/) (with [lit-html plugin](https://marketplace.visualstudio.com/items?itemName=bierner.lit-html)) could be used as well. Also I recommend using bash as the terminal 
 ```bash
 npm install -g yarn
 yarn install
@@ -24,9 +24,9 @@ yarn start
 ## Npm Scripts
 |**npm script**               |**description**                                                  |
 |-----------------------------|-----------------------------------------------------------------|
-|npm run **start**            | Start and serve the app                                         |
+|npm run **start**            | Start and serve the application                                         |
 |npm run **dist**             | Bundle and optimize                                             |
-|npm run **dist:github**      | Bundle and optimize app using `github.env`                      |
+|npm run **dist:github**      | Bundle and optimize application using `github.env`                      |
 |npm run **gh-pages**         | Bundle and optimize... then commit `/dist` to `gh-pages` branch |
 |npm run **test**             | Run tests                                                       |
 |npm run **test:headless**    | Run tests (headless)                                            |
@@ -36,8 +36,8 @@ yarn start
 
 |**Files**        |**Description**                                                                            |
 |-----------------|-------------------------------------------------------------------------------------------|
-|settings.ts      |Exposes environment settings to the app                                                    |
-|local.env        |Variables in this file are used in app through `process.env.<VARIABLE>` (loaded by default)|
+|settings.ts      |Exposes environment settings to the application                                                    |
+|local.env        |Variables in this file are used in application through `process.env.<VARIABLE>` (loaded by default)|
 |*.env            |To load other `<file>.env` instead of `local.env` set `ENVIRONMENT=<file>`                 |
 
 *Note: It's possible to use system variables, even if it is not present in `*.env` files*

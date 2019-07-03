@@ -5,7 +5,7 @@
   "license": "MIT",
   "browserslist": "chrome 77",
   "scripts": {
-    "start": "parcel src/index.html",
+    "start": "rm -rf .cache && parcel src/index.html",
     "dist": "echo ':(' && exit 1",
     "dist:github": "echo ':(' && exit 1",
     "gh-pages": "npm run dist:github; gh-pages -d dist",
@@ -14,13 +14,14 @@
   },
   "dependencies": {
     "@polymer/lit-element": "^0.5.1",
+    "@types/page": "^1.8.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "axios": "^0.17.1",
     "classnames": "^2.2.5",
     "core-js": "^2.5.5",
     "html-webpack-inline-source-plugin": "^0.0.10",
-    "lit-html": "^0.10.0",
-    "page": "https://github.com/QuackMartins/page.js.git#patch-1",
+    "lit-html": "^1.1.0",
+    "page": "^1.11.4",
     "promise-polyfill": "^8.0.0",
     "redux": "^4.0.0",
     "redux-thunk": "^2.2.0"
@@ -28,7 +29,6 @@
   "devDependencies": {
     "@types/core-js": "^0.9.46",
     "@types/node": "^9.6.6",
-    "@types/page": "^1.5.32",
     "parcel": "^1.12.3",
     "sass": "^1.22.2",
     "typescript": "^3.5.2"

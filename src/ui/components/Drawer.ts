@@ -1,15 +1,16 @@
 import {html, LitElement} from "@polymer/lit-element";
-import {settings} from "../../application/environment/settings";
+import {settings} from "../../core/environment/settings";
 import {ReduxLitElement} from "../util/ReduxLitElement";
-import {RootState} from "../../application/state/store";
+import {RootState} from "../../core/state/store";
+import {app} from "../../application/app";
 
 class Drawer extends ReduxLitElement {
 
     _render(props) {
         //language=HTML
         return html`
-            <a href$="${settings.app.routes.root}" class="drawer--item">Todos</a>
-            <a href$="${settings.app.routes.about}" class="drawer--item">About</a>
+            <a href$="${app.link("home")}" class="drawer--item">Todos</a>
+            <a href$="${app.link("about")}" class="drawer--item">About</a>
             
             ${settings.environmentName === "gh" ? 
                 html`<a href$="${settings.app.routes.bundle}" class="drawer--item" target="_blank" rel="noopener">Bundle Analyzes</a>` : ""

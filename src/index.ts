@@ -1,4 +1,9 @@
+import "./styles/styles.scss";
+import "./styles/critical-path.scss";
+
 import {polyfillRunner} from "./polyfills/polyfill";
+import {settings} from "./core/environment/settings";
+import {app} from "./application/app";
 
 async function loadPolyfills() {
     await polyfillRunner();
@@ -7,9 +12,17 @@ async function loadPolyfills() {
 async function loadApp() {
     await loadPolyfills();
 
+    app.start();
+
     //Using require here because despite not generating
     //a new chunk (as we wish)... it will only be executed from here on
-    require("./app");
+    require("./ui/shell");
+
+    //TODO: Rework service worker
+    // if ('serviceWorker' in navigator) {
+    //     navigator.serviceWorker.register(`${settings.app.routes.root}service-worker.js`)
+    //         .then(() => console.log("We work offline"));
+    // }
 }
 
 loadApp();

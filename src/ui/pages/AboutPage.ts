@@ -1,7 +1,7 @@
 import {html} from "@polymer/lit-element";
 import {PageElement} from "../util/PageElement";
-import {RootState} from "../../application/state/store";
-import {settings} from "../../application/environment/settings";
+import {RootState} from "../../core/state/store";
+import {settings} from "../../core/environment/settings";
 
 class AboutPage extends PageElement {
 

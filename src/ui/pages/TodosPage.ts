@@ -1,12 +1,12 @@
 import {html} from "@polymer/lit-element";
-import {appState, RootState} from "../../application/state/store";
-import {TodosActions} from "../../application/state/todos/actions";
-import {Todo} from "../../application/common/types";
+import {appState, RootState} from "../../core/state/store";
+import {TodosActions} from "../../core/state/todos/actions";
+import {Todo} from "../../core/common/types";
 import ModelHandlerMixin from "../util/ModelHandlerMixin";
 
 import "../components/TodoItem";
 import {PageElement} from "../util/PageElement";
-import {settings} from "../../application/environment/settings";
+import {settings} from "../../core/environment/settings";
 
 class TodosPage extends ModelHandlerMixin(PageElement) {
 

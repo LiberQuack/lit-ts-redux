@@ -1,6 +1,6 @@
 import {html, LitElement} from "@polymer/lit-element";
-import {appState} from "../../application/state/store";
-import {AppActions} from "../../application/state/app/actions";
+import {appState} from "../../core/state/store";
+import {AppActions} from "../../core/state/app/actions";
 
 const menuSvg = require("../../assets/baseline-menu.svg");
 const githubIcon = require("../../assets/github-icon.svg");
@@ -10,10 +10,10 @@ class Toolbar extends LitElement {
     constructor() {
         super();
         const drawerIconTemplate = html([menuSvg] as any );
-        this.iconElement = drawerIconTemplate.getTemplateElement().content.querySelector('svg');
-        this.iconElement.addEventListener('click', () => {
-            appState.dispatch(AppActions.toggleDrawer());
-        })
+        // this.iconElement = drawerIconTemplate.getTemplateElement().content.querySelector('svg');
+        // this.iconElement.addEventListener('click', () => {
+        //     appState.dispatch(AppActions.toggleDrawer());
+        // })
     }
 
     _render(props) {
