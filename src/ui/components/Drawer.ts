@@ -1,24 +1,20 @@
-import {html, LitElement} from "@polymer/lit-element";
-import {settings} from "../../core/environment/settings";
-import {ReduxLitElement} from "../util/ReduxLitElement";
+import {customElement, html, LitElement} from "lit-element";
 import {RootState} from "../../core/state/store";
 import {app} from "../../application/app";
 
-class Drawer extends ReduxLitElement {
+@customElement("drawer-element")
+class Drawer extends LitElement {
 
-    _render(props) {
-        //language=HTML
+    render() {
         return html`
-            <a href$="${app.link("home")}" class="drawer--item">Todos</a>
-            <a href$="${app.link("about")}" class="drawer--item">About</a>
-            
-            ${settings.environmentName === "gh" ? 
-                html`<a href$="${settings.app.routes.bundle}" class="drawer--item" target="_blank" rel="noopener">Bundle Analyzes</a>` : ""
-            }
+            <a class="drawer--item" href="${app.link("home")}">Todos</a>
+            <a class="drawer--item" href="${app.link("form")}">Form</a>
+            <a class="drawer--item" href="${app.link("about")}">About</a>            
         `;
     }
 
-    protected _createRoot(): Element | DocumentFragment {
+
+    protected createRenderRoot(): Element | ShadowRoot {
         return this;
     }
 
@@ -30,7 +26,3 @@ class Drawer extends ReduxLitElement {
         }
     }
 }
-
-customElements.define("drawer-element", Drawer);
-
-export {Drawer}

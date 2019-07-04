@@ -13,13 +13,13 @@
     "test:headless": "echo ':(' && exit"
   },
   "dependencies": {
-    "@polymer/lit-element": "^0.5.1",
     "@types/page": "^1.8.0",
     "@webcomponents/webcomponentsjs": "^2.0.0",
     "axios": "^0.17.1",
     "classnames": "^2.2.5",
     "core-js": "^2.5.5",
     "html-webpack-inline-source-plugin": "^0.0.10",
+    "lit-element": "^2.2.0",
     "lit-html": "^1.1.0",
     "page": "^1.11.4",
     "promise-polyfill": "^8.0.0",

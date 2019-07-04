@@ -1,17 +1,11 @@
-import page from "page";
-import {queryObjectMiddeware} from "./common/query-object-middleware";
 import {RouteContext} from "./common/route-context";
-import Context = PageJS.Context;
+import {_router} from "./_router";
+import {RouterInterface} from "./_interfaces";
 
-class Application {
+class Application implements RouterInterface {
 
     private state = {};
-    private routes = [] as {[alias: string]: string}[];
-    private routeSubscriptions = [] as ((routeContext: RouteContext) => void)[];
-
-    constructor() {
-        page(queryObjectMiddeware);
-    }
+    private router = new _router();
 
     getState(path: string) {
 
@@ -21,46 +15,38 @@ class Application {
 
     }
 
+    removeState(path: string): any {
+
+    }
+
+    interceptSetState(pattern: RegExp, middleware) {
+
+    }
+
     subscribeState(path: string, onchange: (state) => {}): void {
 
     }
 
     goTo(path: string): void {
-        page(path);
+        this.router.goTo(path);
+    }
+
+    route(alias: string, path: string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void {
+        this.router.route(alias, path, ...middleware);
     }
 
     start(): void {
-        page.start({})
+        this.router.start();
     }
 
-    route(alias:string, path:string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void {
-        this.routes[alias] = path;
-        page(path, ...middleware.map(mid => {
-            return (pagejsRouteContext: Context, next) => {
-                let routeContext = new RouteContext(alias, pagejsRouteContext);
-                mid(routeContext, next);
-                this.runSubscriptions(routeContext);
-            }
-        }))
+    subscribeRoutes(onchange: (routeContext: RouteContext) => void): void {
+        this.router.subscribeRoutes(onchange);
     }
 
-    subscribeRoutes(onchange: (info: RouteContext) => void): void {
-        this.routeSubscriptions.push(onchange);
+    link(alias: string, params?: { [p: string]: any }): string {
+        return this.router.link(alias, params);
     }
 
-    /**
-     * Build a link given a route alias
-     *
-     * @param alias
-     * @param params
-     */
-    link(alias: string, params?: {[x:string]: any}): string {
-        return this.routes[alias];
-    }
-
-    private runSubscriptions(routeContext: RouteContext) {
-        this.routeSubscriptions.forEach(callback => callback(routeContext));
-    }
 }
 
 export {Application};

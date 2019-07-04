@@ -2,7 +2,6 @@ import "./styles/styles.scss";
 import "./styles/critical-path.scss";
 
 import {polyfillRunner} from "./polyfills/polyfill";
-import {settings} from "./core/environment/settings";
 import {app} from "./application/app";
 
 async function loadPolyfills() {

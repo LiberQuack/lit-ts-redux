@@ -1,4 +1,4 @@
-import {html, LitElement} from "@polymer/lit-element";
+import {html, LitElement} from "lit-element";
 import {appState} from "../../core/state/store";
 import {AppActions} from "../../core/state/app/actions";
 

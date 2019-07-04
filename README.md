@@ -4,7 +4,7 @@ Project created using LitElement, Typescript, Redux and Webpack- [Demo](https://
 *Consider starring the repo if it's helpful, That's the way I know you like it*
 
 This project comes with:
-  - Router implementation with lazy loading
+  - _router implementation with lazy loading
   - Page implementation with transition
   - Redux Implementation
   - Form handler helper

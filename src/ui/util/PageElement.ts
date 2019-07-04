@@ -1,11 +1,12 @@
-import {ReduxLitElement} from "./ReduxLitElement";
 import {RootState} from "../../core/state/store";
+import {LitElement} from "lit-element";
 
-export abstract class PageElement extends ReduxLitElement {
+export abstract class PageElement extends LitElement {
+
+    private _visible = true;
 
     constructor() {
         super();
-        this._visible = true;
         this._definePropertyAccessor("_visible");
         this.classList.add("l-page");
         this.classList.add("e-fade");

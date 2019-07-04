@@ -1,6 +1,6 @@
-import {LitElement} from "@polymer/lit-element";
+import {LitElement} from "lit-element";
 
-declare module "@polymer/lit-element" {
+declare module "lit-element" {
     export interface LitElement extends HTMLElement {
         [x: string]:any
     }
