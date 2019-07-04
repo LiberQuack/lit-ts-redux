@@ -32,16 +32,11 @@ export class Definition<T extends Constraints> {
     }
 
     configure(callback: (define: (path: string, constraints: Partial<T>) => void) => void): Definition<T> {
-        callback(this.define.bind(this));
+        callback((path: string, definitions: T) => {
+            this.definitions[path] = new this.constraint(definitions);
+        });
         return this;
     }
-
-
-    define(path: string, definitions: T): void {
-        this.definitions[path] = new this.constraint(definitions);
-    }
-
-
 }
 
 export class Field<C extends Constraints = Constraints> {

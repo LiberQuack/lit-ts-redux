@@ -16,8 +16,7 @@ const Person = new Definition().configure((define) => {
 
     define("birth", {
         type: Number
-    })
-
+    });
 
 });
 
