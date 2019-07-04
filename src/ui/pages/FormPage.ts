@@ -7,6 +7,11 @@ class FormPage extends LitElement {
     @property()
     person = Person.build();
 
+    constructor() {
+        super();
+        this.person.map();
+    }
+
     //language=HTML
     protected render() {
         const {person} = this;
@@ -15,11 +20,18 @@ class FormPage extends LitElement {
             <div class="l-container l-block-center">
                 <div>
                     ${person.map(field => html`
-                        <input class="${field.cssState}" @change=${e => field}>
+                        <div>
+                            <input class="${field.cssState}" @input=${e => field.setValue(e.target.value)}>
+                        </div>
                     `)}
                     <button @click=${() => person.validate()}>Enviar</button>
                 </div>
+                
+                
+                ${JSON.stringify(person)}
+                
             </div>
+            
         `
     }
 

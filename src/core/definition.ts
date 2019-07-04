@@ -1,6 +1,12 @@
 import {Constructor} from "lit-element";
 
-export const DefinitionCssState = {
+interface FieldState {
+    dirty: string;
+    valid: string;
+    invalid: string;
+}
+
+export const DefinitionCssState: FieldState = {
     dirty: "isDirty",
     valid: "isValid",
     invalid: "isInvalid",
@@ -39,9 +45,14 @@ export class Definition<T extends Constraints> {
     }
 }
 
-export class Field<C extends Constraints = Constraints> {
+export class Field<T extends Constraints = Constraints> {
 
-    constructor(definitions: C) {
+    private value;
+    private listeners = [] as Array<(field: Field) => void>;
+    private state:
+
+
+    constructor(definitions: T) {
 
     }
 
@@ -50,6 +61,26 @@ export class Field<C extends Constraints = Constraints> {
     }
 
     setValue(value: any) {
+        this.value = value;
+    }
+
+    subscribeState(callback: (field: Field) => void) {
+        this.listeners.push(callback);
+    }
+
+    prune() {
+        this.setDirty(false);
+    }
+
+    setDirty(toggle: boolean) {
+
+    }
+
+    setInvalid(toggle: boolean) {
+
+    }
+
+    setValid(toggle: boolean) {
 
     }
 
