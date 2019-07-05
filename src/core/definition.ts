@@ -66,10 +66,10 @@ export class Definition<T extends Constraints> {
     }
 }
 
-export class Model<T extends Constraints = Constraints> {
+export class Model<T extends Constraints> {
 
     private listeners = [] as any[];
-    private fields = [] as Field[];
+    private fields = [] as Field<T>[];
     private validators = [] as { name: string, validator: ((model: Model<T>) => Promise<boolean>) }[];
 
     constructor(definitions: { [p: string]: T }, validators: { name: string, validator: ((model: Model<T>) => Promise<boolean>) }[]) {
@@ -106,7 +106,7 @@ export class Model<T extends Constraints = Constraints> {
         return modelValidations.every(itemIsTrue);
     }
 
-    map(callback: (field: Field, index: number) => any): any[] {
+    map(callback: (field: Field<T>, index: number) => any): any[] {
         return this.fields.map(callback);
     }
 
@@ -119,7 +119,7 @@ export class Model<T extends Constraints = Constraints> {
 const primitivesProtos = [String, Number, Boolean, Symbol].map(it => it.prototype);
 const isPrimitive = (constructor) => primitivesProtos.indexOf(constructor.prototype) > -1;
 
-export class Field<T extends Constraints = Constraints> {
+export class Field<T extends Constraints> {
 
     private _value;
     private _invalidReason = undefined;
@@ -128,7 +128,7 @@ export class Field<T extends Constraints = Constraints> {
     private _name: string;
     private _dirty = undefined;
     private constraint = undefined as T;
-    private listeners = [] as Array<(field: Field) => void>;
+    private listeners = [] as Array<(field: Field<T>) => void>;
 
     constructor(path: string, constraints: T) {
         this._name = path;
@@ -182,7 +182,7 @@ export class Field<T extends Constraints = Constraints> {
         this.runListeners();
     }
 
-    subscribe(changeListener: ((field: Field) => void)) {
+    subscribe(changeListener: ((field: Field<T>) => void)) {
         this.listeners.push(changeListener);
     }
 
