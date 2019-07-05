@@ -5,8 +5,8 @@
   "license": "MIT",
   "browserslist": "chrome 77",
   "scripts": {
-    "start": "rm -rf .cache && parcel src/index.html",
-    "dist": "echo ':(' && exit 1",
+    "start": "rm -rf dist .cache && parcel src/index.html",
+    "dist": "rm -rf dist .cache && parcel build src/index.html",
     "dist:github": "echo ':(' && exit 1",
     "gh-pages": "npm run dist:github; gh-pages -d dist",
     "test": "echo ':(' && exit 1",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@types/core-js": "^0.9.46",
     "@types/node": "^9.6.6",
+    "cssnano": "^4.1.10",
     "parcel": "^1.12.3",
     "sass": "^1.22.2",
     "typescript": "^3.5.2"

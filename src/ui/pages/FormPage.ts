@@ -5,8 +5,7 @@ import {Person} from "../../application/definitions/Person";
 class FormPage extends LitElement {
 
     @property()
-    person = Person.model()
-        .subscribe(() => this.requestUpdate());
+    person = Person.model().subscribe(() => this.requestUpdate());
 
     //language=HTML
     protected render() {

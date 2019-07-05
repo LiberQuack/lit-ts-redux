@@ -5,7 +5,7 @@ import {app} from "../application/app";
 app.subscribeRoutes(async routeContext => {
     switch (routeContext.alias) {
         case "form":
-            console.log("Rending form page");
+            console.log("Rendering form page");
             return await import("./pages/FormPage");
     }
 });
