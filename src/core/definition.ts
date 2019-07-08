@@ -144,7 +144,7 @@ export class Model<T extends Constraints> {
         this.runListeners();
     }
 
-    subscribe(changeListener: () => void): Model<T> {
+    subscribe(changeListener: (model: Model<T>) => void): Model<T> {
         this.listeners.push(changeListener);
         return this;
     }
