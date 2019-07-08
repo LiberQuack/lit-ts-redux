@@ -6,32 +6,41 @@ class FormPage extends LitElement {
 
     @property()
     person = Person.model().subscribe(() => this.requestUpdate());
-
-    //language=HTML
     protected render() {
         const {person} = this;
 
         return html`
-            <div class="l-container l-block-center">
-                <div>
-                    ${person.map(field => html`
-                        <div>
-                            <div>field: ${field.name}</div>
-                            <input class="${field.cssState}" @input=${e => field.setValue(e.target.value || undefined)} @blur=${e => field.validate()}>
-                            <div>css:${field.cssState}</div>
-                            <div>required:${field.required.toString()}</div>
-                            <div>reason:${field.invalidReason}</div>
-                            <div>invalid:${field.invalid}</div>
-                            <div>valid:${field.valid}</div>
-                            <div>dirty:${field.dirty}</div>
-                        </div>
-                        <br>
-                    `)}
-                    <button @click=${() => person.validate()}>Enviar</button>
+            <div class="l-pad-10">
+                <div class="l-row">
+                    
+                    <div>
+                        ${person.fields.map(field => html`
+                            <div class="field">
+                                <div>field: ${field.name}</div>
+                                <input class="${field.cssState}" @input=${e => field.setValue(e.target.value || undefined)} @blur=${e => field.validate()}>
+                                <div class="field--meta">
+                                    <div><strong>css</strong>: ${field.cssState}</div>
+                                    <div><strong>required</strong>: ${field.required.toString()}</div>
+                                    <div><strong>reason</strong>: ${field.invalidReason}</div>
+                                    <div><strong>valid</strong>: ${field.valid}</div>
+                                    <div><strong>dirty</strong>: ${field.dirty}</div>
+                                </div>
+                            </div>
+                            <br>
+                        `)}
+                        <button @click=${() => person.validate()}>Enviar</button>
+                    </div>
+                    
+                    <div>
+                        <div><strong>Model validators</strong>:<br> ${person.validatorNames.join(", ")}</div><br>
+                        <div><strong>Model valid</strong>:<br> ${person.valid}</div><br>
+                        <div><strong>Plain Obj:</strong></div>
+                        <pre>${
+                            JSON.stringify(person.plainObj(), null, 2)
+                        }</pre>
+                    </div>
                 </div>
-                               
-            </div>
-            
+            </div>    
         `;
     }
 

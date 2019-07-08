@@ -8,8 +8,15 @@ export const DefinitionCssState = {
 
 export class Constraints {
 
+    /**
+     * How will it be converted to a plain object
+     */
     type = String as Constructor<any>;
     required = undefined as boolean;
+
+    /**
+     * Regex pattern to test the raw value set through model.set()
+     */
     pattern = undefined as RegExp;
     extraValidation = undefined as (value: unknown) => Promise<boolean>;
 
@@ -69,24 +76,72 @@ export class Definition<T extends Constraints> {
 export class Model<T extends Constraints> {
 
     private listeners = [] as any[];
-    private fields = [] as Field<T>[];
-    private validators = [] as { name: string, validator: ((model: Model<T>) => Promise<boolean>) }[];
+    private _fields = [] as Field<T>[];
+    private _validatorNames = [] as { name: string, validator: ((model: Model<T>) => Promise<boolean>) }[];
+    private _valid = undefined;
+    private _invalid = undefined;
 
     constructor(definitions: { [p: string]: T }, validators: { name: string, validator: ((model: Model<T>) => Promise<boolean>) }[]) {
-        this.fields = Object.keys(definitions).map(key => {
+        this._fields = Object.keys(definitions).map(key => {
             const field = new Field(key, definitions[key]);
             field.subscribe(() => this.runListeners());
             return field;
         });
-        this.validators = validators;
+        this._validatorNames = validators;
+    }
+
+    plainObj(): {[key:string]:any} {
+        const plainObj = {};
+        this._fields.forEach(field => {
+            const paths = field.name.split(".");
+            const lastPath = paths.pop();
+            const target = paths.reduce((parentObj, path) => {
+                parentObj[path] = parentObj[path] === undefined ? {} : parentObj[path];
+                return parentObj[path];
+            }, plainObj);
+            target[lastPath] = field.value;
+        });
+        return plainObj;
+    }
+
+    prune() {
+        this._fields.forEach(it => it.prune());
     }
 
     load(data) {
 
     }
 
-    reset() {
+    clear() {
 
+    }
+
+    get valid() {
+        return this._valid;
+    }
+
+    get validatorNames() {
+        return this._validatorNames.map(it => it.name);
+    }
+
+    get fields() {
+        return this._fields;
+    }
+
+    get(fieldName): any {
+        return this._fields.find(it => it.name === fieldName).value;
+    }
+
+    setValid(toogle:boolean) {
+        this._valid = toogle;
+        this._invalid = !toogle;
+        this.runListeners();
+    }
+
+    setInvalid(toogle:boolean) {
+        this._valid = !toogle;
+        this._invalid = toogle;
+        this.runListeners();
     }
 
     subscribe(changeListener: () => void): Model<T> {
@@ -94,20 +149,33 @@ export class Model<T extends Constraints> {
         return this;
     }
 
-    async validate(): Promise<boolean> {
-        const itemIsTrue = res => res === true;
+    async validate(validationName?:string): Promise<boolean> {
+        if (validationName === undefined) {
+            const invalidFields = (await Promise.all(this._fields.map(async field => ({
+                name: field.name,
+                valid: await field.validate()
+            })))).filter(it => !it.valid);
 
-        const fieldValidations = await Promise.all(this.fields.map(field => field.validate()));
-        if (!fieldValidations.every(itemIsTrue)) {
-            return false;
+            if (invalidFields.length > 0) {
+                this.setValid(false);
+                return false;
+            }
         }
 
-        const modelValidations = await Promise.all(this.validators.map(it => it.validator(this)));
-        return modelValidations.every(itemIsTrue);
-    }
+        const modelValidators = validationName ? this._validatorNames.filter(it => it.name == validationName) : this._validatorNames;
+        const invalidations = (await Promise.all(modelValidators.map(async it => ({
+            name: it.name,
+            valid: await it.validator(this)
+        })))).filter(it => !it.valid);
 
-    map(callback: (field: Field<T>, index: number) => any): any[] {
-        return this.fields.map(callback);
+        invalidations.forEach(it => {
+            console.debug(`Not validated by [${it.name}]`);
+        });
+
+        const isInvalid = invalidations.length > 0;
+        this.setInvalid(isInvalid);
+
+        return this.valid;
     }
 
     private runListeners() {
@@ -212,8 +280,11 @@ export class Field<T extends Constraints> {
 
     async validate(): Promise<boolean> {
         try {
-            this._invalidReason = await this.constraint.validate(this.value);
+            this._invalidReason = await this.constraint.validate(this._value);
             const isValid = !Boolean(this._invalidReason);
+            if (!isValid) {
+                console.debug(`Not valid [${this.name}] reason [${this._invalidReason}]`);
+            }
             this.setValid(isValid);
             return isValid;
         } catch (error) {
@@ -229,30 +300,3 @@ export class Field<T extends Constraints> {
     }
 
 }
-
-
-// "isReadOnly": undefined,
-// "isVisible": undefined,
-// "normalize": undefined,
-// "extraValidation": undefined,
-// "hookOnSave": undefined
-// "label": "Gênero",
-// "section": "personal-data",
-// "dataType": "text",
-// "validationMessage": "Informe gênero",
-// "tip": undefined,
-// "product": ["CP", "HE", "Refin"],
-// "isMandatory": (application) => { if (application.product === "Refin" || application.product === "CP") { return true } else { return false } },
-// "inputType": "select",
-// "inputProps": {
-//     "domainName": undefined,
-//     "filteredFrom": undefined,
-//     "options": [{ "code": "m", "description": "Masculino" }, { "code": "f", "description": "Feminino" }],
-//     "maxValue": undefined,
-//     "minValue": undefined,
-//     "maxSize": undefined,
-//     "minSize": undefined,
-//     "autoComplete": undefined,
-//     "mask": undefined,
-//     "removeMask": undefined
-// },

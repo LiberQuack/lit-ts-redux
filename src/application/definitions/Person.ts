@@ -8,30 +8,44 @@ const Person = new Definition().configure((define, validate) => {
         required: true,
     });
 
-    define("age", {
-        type: Number,
-        pattern: /\d{2}/,
-        extraValidation: async (value: Number) => value >= 18
-    });
-
-    define("birth", {
-        type: Date,
-        extraValidation: async (value:any) => value.getSeconds() % 2 === 0
-    });
-
-    define("phone", {
-        type: Number,
-        required: true
-    });
-
-    define("zipCode", {
+    define("info.zipCode", {
         pattern: /\d{5}-\d{3}/
     });
 
-    validate("default", async (model): Promise<boolean> => {
-        console.log(model);
-        return true
-    })
+    define("info.age", {
+        type: Number,
+        pattern: /\d{2}/,
+        extraValidation: async (value: Number) => Number(value) >= 18
+    });
+
+    define("info.birth", {
+        type: Date,
+        extraValidation: async (value:any) => new Date(value).getSeconds() % 2 === 0
+    });
+
+    define("bank.agency", {
+        type: Number,
+        required: true,
+        pattern: /^\d{4}$/
+    });
+
+    define("bank.digit", {
+        type: Number,
+        required: true,
+        pattern: /^\d{1}$/
+    });
+
+    /*Virtual ?*/
+
+    /*PlainObject Modifier*/
+
+    validate("default", async (): Promise<boolean> => {
+        return true;
+    });
+
+    validate("bank", async (model): Promise<boolean> => {
+        return model.get("bank.digit") > 5;
+    });
 
 });
 
