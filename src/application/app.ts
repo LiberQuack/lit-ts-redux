@@ -1,21 +1,8 @@
 import {Application} from "../core/application";
+import {router} from "./_router";
 
-const app = new Application();
-
-app.route("home", "/", routeContext => {
-    // console.log("Should load home page");
-});
-
-app.route("form", "/form-page", routeContext => {
-    // console.log("Should load home page");
-});
-
-app.route("about", "/about", routeContext => {
-    // console.log("Should load about page");
-});
-
-app.route("404", "*", routeContext => {
-    // console.log("Should load 404 page")
+const app = new Application({
+    router
 });
 
 //TODO: Remove this line

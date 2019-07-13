@@ -5,9 +5,9 @@ export interface RouterInterface {
 
     start(): void;
 
-    route(alias: string, path: string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void;
-
     subscribeRoutes(onchange: (info: RouteContext) => void): void;
+
+    route()
 
     /**
      * Build a link given a route alias
@@ -16,4 +16,8 @@ export interface RouterInterface {
      * @param params
      */
     link(alias: string, params?: { [x: string]: any }): string;
+}
+
+export interface RouterBuilderInterface extends RouterInterface {
+    route(alias: string, path: string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void;
 }

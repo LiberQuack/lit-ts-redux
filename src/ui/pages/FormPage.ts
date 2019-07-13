@@ -18,7 +18,7 @@ class FormPage extends LitElement {
                             <div class="field">
                                 <div>field: ${field.name}</div>
                                 <input class="${field.cssState}" @input=${e => field.setValue(e.target.value || undefined)} @blur=${e => field.validate()}>
-                                <div class="field--meta">
+                                <div>
                                     <div><strong>css</strong>: ${field.cssState}</div>
                                     <div><strong>required</strong>: ${field.required.toString()}</div>
                                     <div><strong>reason</strong>: ${field.invalidReason}</div>

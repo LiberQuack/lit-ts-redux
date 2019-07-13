@@ -1,11 +1,21 @@
+import {Router} from "./_router";
 import {RouteContext} from "./common/route-context";
-import {_router} from "./_router";
-import {RouterInterface} from "./_interfaces";
+import {RouterInterface, RouterBuilderInterface} from "./_interfaces";
+
+type Opts = {
+    router?: RouterBuilderInterface;
+}
 
 class Application implements RouterInterface {
 
+    static Router = Router;
+
     private state = {};
-    private router = new _router();
+    private _router: RouterBuilderInterface;
+
+    constructor({router}: Opts) {
+        this._router = router || new Router();
+    }
 
     getState(path: string) {
 
@@ -28,23 +38,19 @@ class Application implements RouterInterface {
     }
 
     goTo(path: string): void {
-        this.router.goTo(path);
-    }
-
-    route(alias: string, path: string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void {
-        this.router.route(alias, path, ...middleware);
+        this._router.goTo(path);
     }
 
     start(): void {
-        this.router.start();
+        this._router.start();
     }
 
     subscribeRoutes(onchange: (routeContext: RouteContext) => void): void {
-        this.router.subscribeRoutes(onchange);
+        this._router.subscribeRoutes(onchange);
     }
 
     link(alias: string, params?: { [p: string]: any }): string {
-        return this.router.link(alias, params);
+        return this._router.link(alias, params);
     }
 
 }

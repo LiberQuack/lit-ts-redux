@@ -1,15 +1,11 @@
-import {Definition} from "../../core/definition";
+import {Definition} from "../../core/_definition";
 
-const Person = new Definition().configure((define, validate) => {
+const Person = new Definition().configure((define, validate, plainObjEnricher) => {
 
     define("name", {
         type: String,
         pattern: /\w+ \w+/,
         required: true,
-    });
-
-    define("info.zipCode", {
-        pattern: /\d{5}-\d{3}/
     });
 
     define("info.age", {
@@ -23,21 +19,19 @@ const Person = new Definition().configure((define, validate) => {
         extraValidation: async (value:any) => new Date(value).getSeconds() % 2 === 0
     });
 
-    define("bank.agency", {
+    define("bank.number", {
         type: Number,
         required: true,
-        pattern: /^\d{4}$/
+        pattern: /^\d{4}$/,
+        plainObject: false
     });
 
     define("bank.digit", {
         type: Number,
         required: true,
-        pattern: /^\d{1}$/
+        pattern: /^\d{1}$/,
+        plainObject: false
     });
-
-    /*Virtual ?*/
-
-    /*PlainObject Modifier*/
 
     validate("default", async (): Promise<boolean> => {
         return true;
@@ -45,6 +39,12 @@ const Person = new Definition().configure((define, validate) => {
 
     validate("bank", async (model): Promise<boolean> => {
         return model.get("bank.digit") > 5;
+    });
+
+    plainObjEnricher(model => {
+        return {
+            "info.bank": model.get("bank.number") && model.get("bank.digit") && `${model.get("bank.number")}${model.get("bank.digit")}`
+        }
     });
 
 });

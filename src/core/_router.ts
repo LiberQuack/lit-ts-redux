@@ -1,9 +1,9 @@
 import page from "page";
 import {RouteContext} from "./common/route-context";
-import {RouterInterface} from "./_interfaces";
+import {RouterInterface, RouterBuilderInterface} from "./_interfaces";
 import Context = PageJS.Context;
 
-class _router implements RouterInterface {
+class Router implements RouterBuilderInterface {
 
     private started = false;
     private routes = [] as {[alias: string]: string}[];
@@ -61,4 +61,4 @@ class _router implements RouterInterface {
     }
 }
 
-export {_router};
+export {Router};
