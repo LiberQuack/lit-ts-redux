@@ -31,7 +31,7 @@ class FormPage extends LitElement {
                         <button @click=${() => person.validate()}>Enviar</button>
                     </div>
                     
-                    <div>
+                    <div style="position: sticky; top: 1px;">
                         <div><strong>Model validators</strong>:<br> ${person.validatorNames.join(", ")}</div><br>
                         <div><strong>Model valid</strong>:<br> ${person.valid}</div><br>
                         <div><strong>Plain Obj:</strong></div>

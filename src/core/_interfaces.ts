@@ -7,8 +7,6 @@ export interface RouterInterface {
 
     subscribeRoutes(onchange: (info: RouteContext) => void): void;
 
-    route()
-
     /**
      * Build a link given a route alias
      *

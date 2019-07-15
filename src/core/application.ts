@@ -10,30 +10,30 @@ class Application implements RouterInterface {
 
     static Router = Router;
 
-    private state = {};
+    private _resources = {} as {[x:string]:any};
     private _router: RouterBuilderInterface;
 
     constructor({router}: Opts) {
         this._router = router || new Router();
     }
 
-    getState(path: string) {
+    async get(path: string): Promise<any> {
 
     }
 
-    setState(path: string, obj: any) {
+    set(path: string, value: any): void {
 
     }
 
-    removeState(path: string): any {
+    removeResource(path: string): any {
 
     }
 
-    interceptSetState(pattern: RegExp, middleware) {
+    interceptSetResrouce(pattern: RegExp, ...middlewares) {
 
     }
 
-    subscribeState(path: string, onchange: (state) => {}): void {
+    subscribeResourceChanges(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
 
     }
 
