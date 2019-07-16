@@ -1,5 +1,6 @@
 import {customElement, html, LitElement, property} from "lit-element";
 import {Person} from "../../application/definitions/Person";
+import {app} from "../../application/app";
 
 @customElement("form-page")
 class FormPage extends LitElement {
@@ -9,10 +10,11 @@ class FormPage extends LitElement {
     protected render() {
         const {person} = this;
 
+        const route = app.currentRoute;
+
         return html`
             <div class="l-pad-10">
                 <div class="l-row">
-                    
                     <div>
                         ${person.fields.map(field => html`
                             <div class="field">
@@ -38,6 +40,11 @@ class FormPage extends LitElement {
                         <pre>${
                             JSON.stringify(person.plainObj(), null, 2)
                         }</pre>
+                    </div>
+                    
+                    <div>
+                        <strong>Rota atual</strong><br>
+                        <pre>${JSON.stringify(route, null, 2)}</pre>
                     </div>
                 </div>
             </div>    

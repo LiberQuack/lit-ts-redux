@@ -10,11 +10,17 @@ class Application implements RouterInterface {
 
     static Router = Router;
 
-    private _resources = {} as {[x:string]:any};
+    private _states = {} as {[x:string]:any};
     private _router: RouterBuilderInterface;
+    private _currRoute: RouteContext;
 
     constructor({router}: Opts) {
         this._router = router || new Router();
+        this._router.subscribeRoutes((info) => this._currRoute = info);
+    }
+
+    get currentRoute() {
+        return this._currRoute
     }
 
     async get(path: string): Promise<any> {
@@ -25,15 +31,15 @@ class Application implements RouterInterface {
 
     }
 
-    removeResource(path: string): any {
+    removeState(path: string): any {
 
     }
 
-    interceptSetResrouce(pattern: RegExp, ...middlewares) {
+    interceptStates(pattern: RegExp, ...middlewares) {
 
     }
 
-    subscribeResourceChanges(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
+    subscribeStates(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
 
     }
 
