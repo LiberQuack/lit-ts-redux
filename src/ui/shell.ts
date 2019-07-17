@@ -7,5 +7,9 @@ app.subscribeRoutes(async routeContext => {
         case "form":
             console.log("Rendering form page");
             return await import("./pages/FormPage");
+
+        case "request":
+            console.log("Rendering form page");
+            return await import("./pages/RequestPage");
     }
 });

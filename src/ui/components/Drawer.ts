@@ -9,6 +9,7 @@ class Drawer extends LitElement {
         return html`
             <a class="drawer--item" href="${app.link("home")}">Todos</a>
             <a class="drawer--item" href="${app.link("form")}">Form</a>
+            <a class="drawer--item" href="${app.link("request")}">Request Example</a>
             <a class="drawer--item" href="${app.link("about")}">About</a>            
         `;
     }

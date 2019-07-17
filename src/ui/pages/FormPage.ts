@@ -1,5 +1,5 @@
 import {customElement, html, LitElement, property} from "lit-element";
-import {Person} from "../../application/definitions/Person";
+import {Person} from "../../application/definitions/person";
 import {app} from "../../application/app";
 
 @customElement("form-page")
@@ -42,10 +42,6 @@ class FormPage extends LitElement {
                         }</pre>
                     </div>
                     
-                    <div>
-                        <strong>Rota atual</strong><br>
-                        <pre>${JSON.stringify(route, null, 2)}</pre>
-                    </div>
                 </div>
             </div>    
         `;

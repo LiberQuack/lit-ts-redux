@@ -1,9 +1,8 @@
 import {RouteContext} from "./common/route-context";
+import {Application} from "./application";
 
 export interface RouterInterface {
     goTo(path: string): void;
-
-    start(): void;
 
     subscribeRoutes(onchange: (info: RouteContext) => void): void;
 
@@ -16,6 +15,12 @@ export interface RouterInterface {
     link(alias: string, params?: { [x: string]: any }): string;
 }
 
+export interface RouteMiddlewareCallback {
+    routeContext: RouteContext
+    app: Application,
+};
+
 export interface RouterBuilderInterface extends RouterInterface {
-    route(alias: string, path: string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void;
+
+    route(alias: string, path: string, ...middleware: (({routeContext, app}: RouteMiddlewareCallback, next?: () => any) => void)[]): void;
 }

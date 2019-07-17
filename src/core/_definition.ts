@@ -9,7 +9,9 @@ export const DefinitionCssState = {
 export class Constraints {
 
     /**
-     * How will it be converted to a plain object
+     * Target result type, the value in plain object will be create by:
+     *
+     * [new] Type(fieldRawValue)
      */
     type = String as Constructor<any>;
 
@@ -24,6 +26,14 @@ export class Constraints {
      * Regex pattern to test the raw value set through model.set()
      */
     pattern = undefined as RegExp;
+
+    /**
+     * The last validation run, it receives raw value set by "field.set(...)"
+     * often you will need to parse the value.
+     *
+     * @example
+     * async (value) => Number(value) >= 18
+     */
     extraValidation = undefined as (value: unknown) => Promise<boolean>;
 
     constructor(config: Partial<Constraints>) {

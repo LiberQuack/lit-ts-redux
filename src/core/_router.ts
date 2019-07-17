@@ -1,14 +1,16 @@
 import page from "page";
 import {RouteContext} from "./common/route-context";
-import {RouterInterface, RouterBuilderInterface} from "./_interfaces";
+import {RouterInterface, RouterBuilderInterface, RouteMiddlewareCallback} from "./_interfaces";
 import Context = PageJS.Context;
+import {Application} from "./application";
 
 class Router implements RouterBuilderInterface {
 
-    private started = false;
-    private routes = [] as {[alias: string]: string}[];
-    private routeSubscriptions = [] as ((routeContext: RouteContext) => void)[];
-    private currentRouteContext = null as RouteContext;
+    private _started = false;
+    private _app = null as Application;
+    private _routes = [] as {[alias: string]: string}[];
+    private _routeSubscriptions = [] as ((routeContext: RouteContext) => void)[];
+    private _currentRouteContext = null as RouteContext;
 
     constructor() {
         const queryObjectMiddeware = (req: Context, next: () => any) => {
@@ -23,41 +25,46 @@ class Router implements RouterBuilderInterface {
         page(queryObjectMiddeware);
     }
 
+    get started(): boolean {
+        return this._started
+    }
+
     goTo(path: string): void {
         page(path);
     }
 
-    start(): void {
-        this.started = true;
+    protected _startRouter(app: Application): void {
+        this._started = true;
+        this._app = app;
         page.start({})
     }
 
-    route(alias: string, path: string, ...middleware: ((routeContext: RouteContext, next?: () => any) => void)[]): void {
-        this.routes[alias] = path;
+    route(alias: string, path: string, ...middleware: (({routeContext, app}: RouteMiddlewareCallback, next?: () => any) => void)[]): void {
+        this._routes[alias] = path;
         page(path, ...middleware.map(mid => {
             return (pagejsRouteContext: Context, next) => {
                 let routeContext = new RouteContext(alias, pagejsRouteContext);
-                mid(routeContext, next);
-                this.currentRouteContext = routeContext;
+                mid({app: this._app, routeContext}, next);
+                this._currentRouteContext = routeContext;
                 this.runSubscriptions(routeContext);
             }
         }))
     }
 
     subscribeRoutes(onchange: (info: RouteContext) => void): void {
-        this.routeSubscriptions.push(onchange);
-        if (this.started) {
-            onchange(this.currentRouteContext);
+        this._routeSubscriptions.push(onchange);
+        if (this._started) {
+            // onchange(this._currentRouteContext);
         }
     }
 
     link(alias: string, params?: { [x: string]: any }): string {
-        let link = this.routes[alias] || "";
+        let link = this._routes[alias] || "";
         return link.replace(/:(\w+)\b/g, (substring, key) => params[key]);
     }
 
     runSubscriptions(routeContext: RouteContext) {
-        this.routeSubscriptions.forEach(callback => callback(routeContext));
+        this._routeSubscriptions.forEach(callback => callback(routeContext));
     }
 }
 

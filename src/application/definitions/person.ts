@@ -33,6 +33,10 @@ const Person = new Definition().configure((define, validate, plainObjEnricher) =
         plainObject: false
     });
 
+    define("country", {
+        //TODO: Implement options (<select>)
+    });
+
     validate("default", async (): Promise<boolean> => {
         return true;
     });

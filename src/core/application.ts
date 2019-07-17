@@ -10,45 +10,27 @@ class Application implements RouterInterface {
 
     static Router = Router;
 
-    private _states = {} as {[x:string]:any};
+    private _resources = {} as {[x:string]:any};
     private _router: RouterBuilderInterface;
-    private _currRoute: RouteContext;
 
     constructor({router}: Opts) {
-        this._router = router || new Router();
-        this._router.subscribeRoutes((info) => this._currRoute = info);
+        this._router = router;
     }
 
-    get currentRoute() {
-        return this._currRoute
-    }
-
-    async get(path: string): Promise<any> {
+    async get(resourcePath: string): Promise<any> {
 
     }
 
-    set(path: string, value: any): void {
+    set(resourcePath: string, value: any): void {
 
     }
 
-    removeState(path: string): any {
-
-    }
-
-    interceptStates(pattern: RegExp, ...middlewares) {
-
-    }
-
-    subscribeStates(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
+    subscribeResourceChanges(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
 
     }
 
     goTo(path: string): void {
         this._router.goTo(path);
-    }
-
-    start(): void {
-        this._router.start();
     }
 
     subscribeRoutes(onchange: (routeContext: RouteContext) => void): void {
@@ -57,6 +39,10 @@ class Application implements RouterInterface {
 
     link(alias: string, params?: { [p: string]: any }): string {
         return this._router.link(alias, params);
+    }
+
+    startRouter(): void {
+        (this._router as any)._startRouter(this);
     }
 
 }

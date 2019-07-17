@@ -1,4 +1,5 @@
 import Context = PageJS.Context;
+import {Application} from "../application";
 
 export class RouteContext {
 
