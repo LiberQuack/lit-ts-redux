@@ -10,7 +10,8 @@ class Application implements RouterInterface {
 
     static Router = Router;
 
-    private _resources = {} as {[x:string]:any};
+    x = 0;
+
     private _router: RouterBuilderInterface;
 
     constructor({router}: Opts) {
@@ -18,11 +19,11 @@ class Application implements RouterInterface {
     }
 
     async get(resourcePath: string): Promise<any> {
-
+        return this.x
     }
 
     set(resourcePath: string, value: any): void {
-
+        this.x = value
     }
 
     subscribeResourceChanges(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
@@ -41,7 +42,7 @@ class Application implements RouterInterface {
         return this._router.link(alias, params);
     }
 
-    startRouter(): void {
+    start(): void {
         (this._router as any)._startRouter(this);
     }
 

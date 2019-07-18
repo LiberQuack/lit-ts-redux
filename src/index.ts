@@ -11,7 +11,7 @@ async function loadPolyfills() {
 async function loadApp() {
     await loadPolyfills();
 
-    app.startRouter();
+    app.start();
 
     //Using require here because despite not generating
     //a new chunk (as we wish)... it will only be executed from here on

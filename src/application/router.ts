@@ -10,6 +10,10 @@ router.route("form", "/form-page", ({routeContext}) => {
 
 });
 
+router.route("counter", "/counter-page", ({app, routeContext}) => {
+    console.log("#PPA counter", app)
+});
+
 router.route("request", "/request-page", ({routeContext}) => {
     // console.log("Should load home page");
 });

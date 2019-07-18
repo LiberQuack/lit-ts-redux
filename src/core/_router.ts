@@ -1,8 +1,8 @@
 import page from "page";
 import {RouteContext} from "./common/route-context";
-import {RouterInterface, RouterBuilderInterface, RouteMiddlewareCallback} from "./_interfaces";
-import Context = PageJS.Context;
+import {RouteMiddlewareCallback, RouterBuilderInterface} from "./_interfaces";
 import {Application} from "./application";
+import Context = PageJS.Context;
 
 class Router implements RouterBuilderInterface {
 
@@ -36,7 +36,7 @@ class Router implements RouterBuilderInterface {
     protected _startRouter(app: Application): void {
         this._started = true;
         this._app = app;
-        page.start({})
+        page.start({});
     }
 
     route(alias: string, path: string, ...middleware: (({routeContext, app}: RouteMiddlewareCallback, next?: () => any) => void)[]): void {
@@ -54,7 +54,7 @@ class Router implements RouterBuilderInterface {
     subscribeRoutes(onchange: (info: RouteContext) => void): void {
         this._routeSubscriptions.push(onchange);
         if (this._started) {
-            // onchange(this._currentRouteContext);
+            onchange(this._currentRouteContext);
         }
     }
 

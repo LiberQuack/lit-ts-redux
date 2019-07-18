@@ -5,11 +5,12 @@ import {app} from "../application/app";
 app.subscribeRoutes(async routeContext => {
     switch (routeContext.alias) {
         case "form":
-            console.log("Rendering form page");
             return await import("./pages/FormPage");
 
         case "request":
-            console.log("Rendering form page");
             return await import("./pages/RequestPage");
+
+        case "counter":
+            return await import("./pages/CounterPage");
     }
 });

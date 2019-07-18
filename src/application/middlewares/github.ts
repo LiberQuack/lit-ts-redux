@@ -1,5 +1,5 @@
-import {Resource} from "../../core/_resource";
+import {ResourceManager} from "../../core/_resource-manager";
 
-class GitHub extends Resource {
+class GitHub extends ResourceManager {
 
 }

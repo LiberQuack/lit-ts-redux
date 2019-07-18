@@ -10,8 +10,6 @@ class FormPage extends LitElement {
     protected render() {
         const {person} = this;
 
-        const route = app.currentRoute;
-
         return html`
             <div class="l-pad-10">
                 <div class="l-row">
