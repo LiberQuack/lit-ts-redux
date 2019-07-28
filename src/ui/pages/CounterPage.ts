@@ -1,31 +1,32 @@
 import {customElement, html, LitElement} from "lit-element";
-import {app} from "../../application/app";
-import {until} from "lit-html/directives/until";
+import {Counter} from "../../application/controls/counter";
 
 @customElement("counter-page")
 class CounterPage extends LitElement {
 
-    connectedCallback(): void {
-        super.connectedCallback();
-        app.subscribeResourceChanges("count", (path1, resource) => {
-
-        })
-    }
-
-    async step(direction: boolean) {
-        const count = await app.get("count");
-        app.set("count", count + (direction ? 1 : -1));
-    }
+    counter1 = new Counter().subscribe(() => this.requestUpdate());
+    counter2 = new Counter().subscribe(() => this.requestUpdate());
 
     protected render() {
-        let count = app.get("count");
+        const counter1 = this.counter1;
+        const counter2 = this.counter2;
 
         //language=HTML
         return html`
             <div class="l-pad-10">
-                <button @click=${() => this.step(false)}>-</button>
-                <span>${until(count)}</span>
-                <button @click=${() => this.step(true)}>+</button>
+                <div>
+                    <div>Sync counter</div>
+                    <button @click=${() => counter1.decrement()}>-</button>
+                    <span>${counter1.count}</span>
+                    <button @click=${() => counter1.increment()}>+</button>
+                </div>
+                <br>
+                <div>
+                    <div>Aync counter (each action takes 1s)</div>
+                    <button @click=${() => counter2.asyncDecrement()}>-</button>
+                    <span>${counter2.count}</span>
+                    <button @click=${() => counter2.asyncIncrement()}>+</button>
+                </div>
             </div>
         `;
     }
