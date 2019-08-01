@@ -1,4 +1,5 @@
 import {Application} from "../core/application";
+import {Counter} from "./models/counter";
 
 const router = new Application.Router();
 
@@ -11,7 +12,10 @@ router.route("form", "/form-page", ({routeContext}) => {
 });
 
 router.route("counter", "/counter-page", ({app, routeContext}) => {
-    console.log("#PPA counter", app)
+    const counter = new Counter();
+    counter.count = 500;
+
+    app.set("counter", counter);
 });
 
 router.route("request", "/request-page", ({routeContext}) => {

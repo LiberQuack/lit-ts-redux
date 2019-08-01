@@ -10,8 +10,6 @@ class Application implements RouterInterface {
 
     static Router = Router;
 
-    x = 0;
-
     private _router: RouterBuilderInterface;
 
     constructor({router}: Opts) {
