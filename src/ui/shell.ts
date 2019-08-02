@@ -1,7 +1,7 @@
 import "../ui/components/Toolbar";
 import "../ui/components/Drawer";
 import {app} from "../application/app";
-import {LitElement, html, customElement} from "lit-element";
+import {customElement, LitElement} from "lit-element";
 
 @customElement("injector-element")
 class InjectorElement extends LitElement {
@@ -22,8 +22,11 @@ class InjectorElement extends LitElement {
         });
 
         addEventListener("connect", async (evt: CustomEvent) => {
-            const elm = evt.composedPath()[0];
-            const mapping = evt.detail;
+            const elm = evt.composedPath()[0] as HTMLElement;
+            const mapping = elm.getAttributeNames().filter(it => /inject-/.test(it)).reduce((mapping, attrName) => {
+                const propName = attrName.replace(/^inject-/, "");
+                return {...mapping, [propName]: elm.getAttribute(attrName)}
+            }, {});
             const properties = Object.keys(mapping);
             const propResources = {};
             await Promise.all(properties.map(async (prop) => {

@@ -1,23 +1,22 @@
-import {customElement, html, LitElement, property} from "lit-element";
+import {customElement, html} from "lit-element";
 import {Counter} from "../../application/models/counter";
+import {PotatoElement} from "../potato-element";
 
 @customElement("counter-page")
-class CounterPage extends LitElement {
-
-    @property()
-    counter: Counter = new Counter();
-
-    resourceMapper = {
-        counter: "counter"
-    };
+class CounterPage extends PotatoElement {
 
     constructor() {
         super();
-        this.dispatchEvent(new CustomEvent("connect", {bubbles: true, detail: this.resourceMapper}))
+        this.counter = new Counter();
+    }
+
+    set counter(counter: Counter) {
+        //TODO _counter.unsubscribe();
+        this["_counter"] = counter.subscribe(() => this.requestUpdate());
     }
 
     protected render() {
-        const counter = this.counter;
+        const counter = this._counter as Counter;
 
         //language=HTML
         return html`

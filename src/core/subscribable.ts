@@ -20,7 +20,12 @@ abstract class Subscribable {
 
     subscribe(callback: () => void): this {
         this._subscribers.push(callback);
+        callback();
         return this;
+    }
+
+    unsubscribe() {
+
     }
 
     protected runSubscribers() {
