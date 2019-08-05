@@ -19,20 +19,21 @@ abstract class Subscribable {
     }
 
     subscribe(callback: () => void): this {
+        // TODO: Save who subscribe
         this._subscribers.push(callback);
         callback();
         return this;
     }
 
-    unsubscribe() {
-
+    unsubscribe(who: any) {
+        // TODO
     }
 
     protected runSubscribers() {
         this._subscribers.forEach(callback => callback());
     }
 
-    abstract registerWatchedProperties(): string[];
+    protected abstract registerWatchedProperties(): string[];
 
 }
 

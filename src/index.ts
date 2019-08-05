@@ -15,7 +15,7 @@ async function loadApp() {
 
     //Using require here because despite not generating
     //a new chunk (as we wish)... it will only be executed from here on
-    require("./ui/shell");
+    require("./ui/app-manager");
 
     //TODO: Rework service worker
     // if ('serviceWorker' in navigator) {

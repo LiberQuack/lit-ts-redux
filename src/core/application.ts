@@ -1,9 +1,11 @@
-import {Router} from "./_router";
+import {Router} from "./router";
 import {RouteContext} from "./common/route-context";
 import {RouterInterface, RouterBuilderInterface} from "./_interfaces";
+import {ResourceManager} from "./resource-manager";
 
 type Opts = {
     router?: RouterBuilderInterface;
+    resourceManager?: ResourceManager;
 }
 
 class Application implements RouterInterface {
@@ -11,21 +13,23 @@ class Application implements RouterInterface {
     static Router = Router;
 
     private _router: RouterBuilderInterface;
+    private _resourceManager: ResourceManager;
 
-    constructor({router}: Opts) {
+    constructor({router, resourceManager = new ResourceManager()}: Opts) {
         this._router = router;
+        this._resourceManager = resourceManager;
     }
 
-    async get(resourcePath: string): Promise<any> {
-        return this.x
+    get(resourcePath: string): any {
+        return this._resourceManager.get(resourcePath)
     }
 
     set(resourcePath: string, value: any): void {
-        this.x = value
+        this._resourceManager.set(resourcePath, value);
     }
 
-    subscribeResourceChanges(pattern: RegExp, onchange: (path: string, resource: any) => {}): void {
-
+    subscribeResourceChanges(callback): void {
+        this._resourceManager.subscribe(callback)
     }
 
     goTo(path: string): void {

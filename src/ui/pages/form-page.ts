@@ -1,9 +1,9 @@
-import {customElement, html, LitElement, property} from "lit-element";
+import {customElement, html, property} from "lit-element";
 import {Person} from "../../application/definitions/person";
-import {app} from "../../application/app";
+import {PageElement} from "../page-element";
 
 @customElement("form-page")
-class FormPage extends LitElement {
+class FormPage extends PageElement {
 
     @property()
     person = Person.model().subscribe(() => this.requestUpdate());

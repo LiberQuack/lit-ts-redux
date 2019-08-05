@@ -19,3 +19,4 @@ class Counter extends Subscribable {
 }
 
 export {Counter};
+

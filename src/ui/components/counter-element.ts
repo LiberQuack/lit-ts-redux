@@ -1,17 +1,18 @@
-import {customElement, html} from "lit-element";
+import {customElement, html, property} from "lit-element";
 import {Counter} from "../../application/models/counter";
-import {PotatoElement} from "../potato-element";
+import {SimpleElement} from "../simple-element";
 
-@customElement("counter-page")
-class CounterPage extends PotatoElement {
+@customElement("counter-element")
+class CounterElement extends SimpleElement {
 
     constructor() {
         super();
         this.counter = new Counter();
     }
 
+    @property()
     set counter(counter: Counter) {
-        //TODO _counter.unsubscribe();
+        this["_counter"] && this["_counter"].unsubscribe();
         this["_counter"] = counter.subscribe(() => this.requestUpdate());
     }
 
@@ -22,7 +23,7 @@ class CounterPage extends PotatoElement {
         return html`
             <div class="l-pad-10">
                 <div>
-                    <div>Sync counter</div>
+                    <div>Counter Element</div>
                     <button @click=${() => counter.decrement()}>-</button>
                     <span>${counter.count}</span>
                     <button @click=${() => counter.increment()}>+</button>
@@ -31,3 +32,5 @@ class CounterPage extends PotatoElement {
         `;
     }
 }
+
+export {CounterElement}

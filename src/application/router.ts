@@ -18,7 +18,7 @@ router.route("counter", "/counter-page", ({app, routeContext}) => {
     app.set("counter", counter);
 });
 
-router.route("request", "/request-page", ({routeContext}) => {
+router.route("github", "/github-page", ({routeContext}) => {
     // console.log("Should load home page");
 });
 

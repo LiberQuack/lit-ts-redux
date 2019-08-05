@@ -18,13 +18,12 @@
 </nav>
 
 <main class="l-viewport">
-    <injector-element>
-        <counter-page></counter-page>
-        <counter-page inject-counter="counter"></counter-page>
-        <form-page></form-page>
-        <request-page></request-page>
+    <app-manager>
+        <counter-page route="counter"></counter-page>
+        <form-page route="form"></form-page>
+        <request-page route="github"></request-page>
         <about-page></about-page>
-    </injector-element>
+    </app-manager>
 </main>
 
 <script src="./index.ts"></script>

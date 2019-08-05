@@ -1,7 +1,8 @@
-import {customElement, html, LitElement} from "lit-element";
+import {customElement, html} from "lit-element";
+import {PageElement} from "../page-element";
 
 @customElement("request-page")
-class RequestPage extends LitElement {
+class RequestPage extends PageElement {
 
     //language=HTML
     protected render() {
