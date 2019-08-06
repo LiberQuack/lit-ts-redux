@@ -13,7 +13,7 @@ class AppManager extends LitElement {
                 case "form":
                     return await import("./pages/form-page");
 
-                case "request":
+                case "github":
                     return await import("./pages/github-page");
 
                 case "counter":

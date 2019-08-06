@@ -4,6 +4,11 @@ class Counter extends Subscribable {
 
     count = 100;
 
+    constructor(value?: number) {
+        super();
+        if (typeof value === "number") this.count = 500;
+    }
+
     registerWatchedProperties(): string[] {
         return ["count"];
     }

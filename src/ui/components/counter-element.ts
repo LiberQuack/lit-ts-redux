@@ -12,8 +12,7 @@ class CounterElement extends SimpleElement {
 
     @property()
     set counter(counter: Counter) {
-        this["_counter"] && this["_counter"].unsubscribe();
-        this["_counter"] = counter.subscribe(() => this.requestUpdate());
+        this.subscribe("_counter", counter);
     }
 
     protected render() {
