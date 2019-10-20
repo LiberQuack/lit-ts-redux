@@ -17,4 +17,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
             </div>
         `}};n=r([(0,e.customElement)("page-counter")],n);
 },{"lit-element":"+bhx","../page-element":"01Fd","../components/counter-element":"draT"}]},{},[], null)
-//# sourceMappingURL=/counter-page.a161fe0e.js.map
+//# sourceMappingURL=counter-page.a161fe0e.js.map

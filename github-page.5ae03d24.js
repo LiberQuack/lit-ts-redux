@@ -27,4 +27,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
             </section>
         `}};i=n([(0,e.customElement)("page-github")],i);
 },{"lit-element":"+bhx","../page-element":"01Fd","../../application/models/request":"vVSI"}]},{},[], null)
-//# sourceMappingURL=/github-page.5ae03d24.js.map
+//# sourceMappingURL=github-page.5ae03d24.js.map

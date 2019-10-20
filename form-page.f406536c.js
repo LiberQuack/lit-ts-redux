@@ -37,4 +37,4 @@ var e;Object.defineProperty(exports,"__esModule",{value:!0}),exports.Person=void
             </div>    
         `}createRenderRoot(){return this}};r([(0,e.property)()],s.prototype,"person",void 0),s=r([(0,e.customElement)("page-form")],s);
 },{"lit-element":"+bhx","../../application/definitions/person":"5qac","../page-element":"01Fd"}]},{},[], null)
-//# sourceMappingURL=/form-page.f406536c.js.map
+//# sourceMappingURL=form-page.f406536c.js.map

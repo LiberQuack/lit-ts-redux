@@ -6,4 +6,4 @@ parcelRequire=function(e,r,t,n){var i,o="function"==typeof parcelRequire&&parcel
             </div>
         `}};l=r([(0,e.customElement)("page-404")],l);
 },{"lit-element":"+bhx","../page-element":"01Fd"}]},{},[], null)
-//# sourceMappingURL=/404-page.6c9e30ea.js.map
+//# sourceMappingURL=404-page.6c9e30ea.js.map
