@@ -1,0 +1,63 @@
+{
+  "_from": "json-tree-view",
+  "_id": "json-tree-view@0.4.12",
+  "_inBundle": false,
+  "_integrity": "sha512-p6si1qYiJQuJdL/KUCuAXmxWllIpZqyCCbcmIBD9k2M01JZVgzyYq9hVcTxeiy1rPgTiyZRVA86U92Ymw63dUQ==",
+  "_location": "/json-tree-view",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "json-tree-view",
+    "name": "json-tree-view",
+    "escapedName": "json-tree-view",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/json-tree-view/-/json-tree-view-0.4.12.tgz",
+  "_shasum": "634307024bd9b5069bcfd15379030942f95c6a57",
+  "_spec": "json-tree-view",
+  "_where": "/projects/lit-ts-redux",
+  "authors": [
+    "Richard Livingston <richard.npm@logoapps.com>",
+    "Lu Yuan <luyuan.china@gmail.com>"
+  ],
+  "bugs": {
+    "url": "https://github.com/luyuan/json-tree-view/issues"
+  },
+  "bundleDependencies": false,
+  "deprecated": false,
+  "description": "A JSON Tree View Component, for browsering or editing JSON object. Fork from json-view writing by Richard Livingston.",
+  "files": [
+    "JSONView.js",
+    "devtools.css",
+    "example"
+  ],
+  "homepage": "https://richard-livingston.github.io/json-view/",
+  "keywords": [
+    "json",
+    "viewer",
+    "editor",
+    "view",
+    "edit",
+    "devtools",
+    "san",
+    "explorer",
+    "tree"
+  ],
+  "main": "JSONView.js",
+  "name": "json-tree-view",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/luyuan/json-tree-view.git"
+  },
+  "version": "0.4.12"
+}

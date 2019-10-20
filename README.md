@@ -1,5 +1,38 @@
-# Lit Typescript Starter Kit
-Project created using LitElement, Typescript, Redux and Webpack- [Demo](https://quackmartins.github.io/lit-ts-redux)
+# Appik
+
+This library looks towards a good front-end architecture where we do not use components for everything, 
+despite they are great we prefer to divide the front-end in:
+
+ - **Router** is kept away from components (eg: `<Router path="/home">`), we don't think it's a UI responsability. See the [example](#Router)
+ - **Resources** these are the things you share via `app.set("resource-name", {foo: "bar"})` and `app.get("resource-name")`
+ - **Application** is the combination of the last two topics
+
+## Router
+
+```typescript
+const router = new Appik.Router();
+
+router.route("home", "/", ({app, routeContext}) => {
+    app.set("message", "Welcome")
+});
+```
+
+## Inspector
+
+```typescript
+import {openAppInspector} from "appik/appik-inspector";
+import {app} from "./index.ts"
+
+
+if (process.env.NODE_ENV === "development") {
+    openAppInspector();
+}
+```
+
+By running this code a popup will be opened with our app inspecting 
+tool, be sure to remove it in your production build 
+
+---
 
 *Consider starring the repo if it's helpful, That's the way I know you like it*
 

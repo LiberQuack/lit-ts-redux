@@ -4,7 +4,7 @@ class ResourceManager extends Subscribable {
 
     private _resources = {} as {[x:string]:any};
 
-    registerWatchedProperties(): string[] {
+    _registerWatchedProperties(): string[] {
         return ["_resources"];
     }
 

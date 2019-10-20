@@ -6,16 +6,13 @@ abstract class PageElement extends SimpleElement {
     constructor() {
         super();
         app.subscribeRoutes((routeContext) => {
-            const matchRoute = routeContext.alias === this.getAttribute("route");
+            const matchRoute = routeContext.alias === this.getRouteName();
             this.style.display = matchRoute ? '' : 'none';
         })
     }
 
-    connectedCallback(): void {
-        super.connectedCallback();
-        if (!this.getAttributeNames().find(it => it === "route")) {
-            console.warn("Page elements must have attribute 'route'", this);
-        }
+    getRouteName() {
+        return this.tagName.toLocaleLowerCase().replace(/^page-/, "");
     }
 
 }

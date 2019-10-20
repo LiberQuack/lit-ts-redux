@@ -8,18 +8,6 @@ class AppManager extends LitElement {
 
     constructor() {
         super();
-        app.subscribeRoutes(async routeContext => {
-            switch (routeContext.alias) {
-                case "form":
-                    return await import("./pages/form-page");
-
-                case "github":
-                    return await import("./pages/github-page");
-
-                case "counter":
-                    return await import("./pages/counter-page");
-            }
-        });
 
         this.addEventListener("inject", async (e: CustomEvent) => {
 

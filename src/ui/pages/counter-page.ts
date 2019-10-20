@@ -3,7 +3,7 @@ import {PageElement} from "../page-element";
 
 import "../components/counter-element";
 
-@customElement("counter-page")
+@customElement("page-counter")
 class CounterPage extends PageElement {
 
     protected render() {

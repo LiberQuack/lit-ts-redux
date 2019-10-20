@@ -2,11 +2,12 @@ import {customElement, html, property} from "lit-element";
 import {Person} from "../../application/definitions/person";
 import {PageElement} from "../page-element";
 
-@customElement("form-page")
+@customElement("page-form")
 class FormPage extends PageElement {
 
     @property()
     person = Person.model().subscribe(() => this.requestUpdate());
+
     protected render() {
         const {person} = this;
 

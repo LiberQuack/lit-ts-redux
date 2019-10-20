@@ -11,7 +11,7 @@ class Toolbar extends LitElement {
             <div class="toolbar--content">
                 ${this.iconElement}
                 <div class="toolbar--content--left">
-                    Simple Todo App
+                    Super Application App
                 </div>
                 <div class="toolbar--content--right">
                     <a href="https://github.com/quackmartins/lit-ts-redux" 

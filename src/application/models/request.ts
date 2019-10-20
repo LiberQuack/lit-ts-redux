@@ -1,12 +1,14 @@
 import {Subscribable} from "../../core/subscribable";
 
-class JsonRequest<T> extends Subscribable {
+
+class HttpRequest<T = any> extends Subscribable {
 
     url = "";
-    method = "";
     loading = false;
     done = false;
+    runCounts = 0;
 
+    opts: HttpRequestOptions;
     status: number;
     responseBody: T;
     responseHeaders: Headers;
@@ -14,13 +16,15 @@ class JsonRequest<T> extends Subscribable {
     error = false;
     errorBody: any;
 
-    constructor(url: string, method: "GET"|"PUT"|"DELETE"|"POST" = "GET") {
+    constructor(url?: string, opts?:HttpRequestOptions) {
         super();
         this.url = url;
-        this.method = method;
+        this.opts = toHttpRequestOptions(opts);
     }
 
-    start(options?: {data:any, force: boolean}): void {
+    run(options?: {force: boolean}): void {
+
+        this.runCounts += 1;
 
         if (this.loading) {
             console.warn("Request ongoing, you can use force if you really need");
@@ -34,7 +38,7 @@ class JsonRequest<T> extends Subscribable {
             "content-type": "application/json"
         };
 
-        fetch(this.url, {method: this.method, headers})
+        fetch(this.url, {method: this.opts.method, headers})
             .then(async res => {
                 try {
                     const error = res.status >= 400 || res.status < 200;
@@ -62,10 +66,22 @@ class JsonRequest<T> extends Subscribable {
             });
     }
 
-    protected registerWatchedProperties(): string[] {
-        return ["loading", "done", "error", "responseBody", "errorBody", "status"];
+    protected _registerWatchedProperties(): string[] {
+        return ["loading", "done", "error", "responseBody", "errorBody", "status", "url"];
     }
 
 }
 
-export {JsonRequest};
+type HttpRequestOptions = {
+    method: "GET" | "PUT" | "DELETE" | "POST" | "PATCH";
+}
+
+function toHttpRequestOptions(options): HttpRequestOptions {
+
+    return {
+        method: "GET",
+        ...options
+    }
+}
+
+export {HttpRequest};

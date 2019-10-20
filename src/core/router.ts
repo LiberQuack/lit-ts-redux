@@ -8,7 +8,7 @@ class Router implements RouterBuilderInterface {
 
     private _started = false;
     private _app = null as Application;
-    private _routes = [] as {[alias: string]: string}[];
+    private _routes = {} as {[alias: string]: string};
     private _routeSubscriptions = [] as ((routeContext: RouteContext) => void)[];
     private _currentRouteContext = null as RouteContext;
 

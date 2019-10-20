@@ -9,7 +9,7 @@ class Counter extends Subscribable {
         if (typeof value === "number") this.count = 500;
     }
 
-    registerWatchedProperties(): string[] {
+    _registerWatchedProperties(): string[] {
         return ["count"];
     }
 

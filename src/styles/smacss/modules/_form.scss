@@ -2,6 +2,14 @@
 
 }
 
+.form--button {
+  padding: .75em;
+  background: #555;
+  color: $font-color;
+  border-radius: .25em;
+  box-shadow: 0 2px 2px black;
+}
+
 .form--floatinput {
   border: none;
   padding: 1.25em;

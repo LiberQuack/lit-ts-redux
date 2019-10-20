@@ -1,37 +1,44 @@
-import {customElement, html, property} from "lit-element";
+import {customElement, html} from "lit-element";
 import {PageElement} from "../page-element";
-import {JsonRequest} from "../../application/models/request";
+import {HttpRequest} from "../../application/models/request";
 
-@customElement("request-page")
+const USER_URL_PART = "https://api.github.com/users";
+
+@customElement("page-github")
 class RequestPage extends PageElement {
 
-    @property()
-    set githubreq(req: JsonRequest<any>) {
-        this.subscribe("_gitReq", req);
+    constructor() {
+        super();
+        this.subscribe("ghUserReq", new HttpRequest());
     }
 
     //language=HTML
     protected render() {
-        const req = this._gitReq as JsonRequest<any>;
+        const ghUserReq = this.ghUserReq as HttpRequest;
 
         return html`
             <section class="l-pad-10 l-inline-center">
-                <div>
+                <div class="card">
                     <p>Enter your github user name</p>
-                    <input type="text" @blur="${() => req.start()}">
+                    <input type="text" @blur="${e => ghUserReq.url = `${USER_URL_PART}/${e.target.value}`}">
+                    <div ?hidden="${!ghUserReq.url}">
+                        <p>
+                            <strong>Your github url is:</strong>
+                            <br>${ghUserReq.url}
+                        </p>
+                        <button class="form--button" @click="${() => ghUserReq.run()}">GET USER INFO</button> 
+                    </div>
                 </div>
                 
-                <div>
-                    <div><br>Loading icon</div>
-                    
-<pre>Member since:
-Projects:
-Bigger Project:
-Last commit:
-</pre>
-                </div>
+                <br>
                 
-<div><br>Case any error happen</div>
+                <div class="card" ?hidden="${ghUserReq.runCounts === 0}">
+                    <div ?hidden="${!ghUserReq.loading}">Loading...</div>
+                    ${ghUserReq.responseBody && html`
+                        <div>Member since: ${new Date(ghUserReq.responseBody.created_at).getFullYear()}</div>                    
+                        <div>Projects Count: ${ghUserReq.responseBody.public_repos}</div>                    
+                    `}
+                </div>
             </section>
         `;
     }

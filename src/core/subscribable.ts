@@ -3,7 +3,7 @@ abstract class Subscribable {
     private _subscribers = [];
 
     constructor() {
-        const properties = this.registerWatchedProperties();
+        const properties = this._registerWatchedProperties();
         properties.forEach(propertyName => {
             const privatePropertyName = `__${propertyName}`;
             Object.defineProperty(this, propertyName, {
@@ -33,7 +33,7 @@ abstract class Subscribable {
         this._subscribers.forEach(callback => callback());
     }
 
-    protected abstract registerWatchedProperties(): string[];
+    protected abstract _registerWatchedProperties(): string[];
 
 }
 
