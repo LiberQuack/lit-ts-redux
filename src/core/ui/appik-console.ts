@@ -1,38 +1,29 @@
 import {html, LitElement, property, TemplateResult} from "lit-element";
 import {Application} from "../application";
-
-const JSONTreeView = require("./json-tree-view/JSONView");
-
+import "./data-viewer";
+import {repeat} from "lit-html/directives/repeat";
 
 class AppikConsole extends LitElement {
 
-    _app: Application;
     walkIndex = -1;
-
     @property()
     private _inputHistory = [];
-
     @property()
     private evaluations = [] as any[];
 
-    @property()
-    set resource(resourceName) {
-        const input = this.getCodeInput();
-        input.value = `application.get("${resourceName}")`;
-        input.focus();
-        this.evaluate()
-    }
+    _app: Application;
 
     @property()
     set app(val) {
-        this._app = val
+        this._app = val;
     }
 
-    constructor() {
-        super();
-        this.addEventListener("click", () => {
-            this.renderRoot.querySelector("input").focus();
-        });
+    @property()
+    set code(code) {
+        const input = this.getCodeInput();
+        input.value = code;
+        input.focus();
+        this.evaluate(code);
     }
 
     buildSandBox(vars) {
@@ -55,11 +46,25 @@ class AppikConsole extends LitElement {
     }
 
 
-    evaluate(e: KeyboardEvent) {
+    submitInput(e: KeyboardEvent) {
         if (!(e.code == "Enter" || e.code == "NumpadEnter")) {
-            return
+            return;
         }
 
+        const input = this.getCodeInput();
+        const code = input.value;
+
+        this.evaluate(code);
+
+        if (code != this._inputHistory[this._inputHistory.length - 1]) {
+            this._inputHistory = [code, ...this._inputHistory];
+        }
+
+        input.value = "";
+        this.walkIndex = -1;
+    }
+
+    evaluate(code) {
         const help = () => {
             return html`
             <code>
@@ -79,24 +84,46 @@ class AppikConsole extends LitElement {
             this.evaluations = [];
         };
 
-
         const sandbox = this.buildSandBox({application: this._app, help, clear});
-        const input = this.getCodeInput();
-        const evalResult = sandbox(input.value);
+        const evalResult = sandbox(code);
+        const result = evalResult instanceof TemplateResult ? evalResult : html`<data-viewer .data="${evalResult}"/>`;
 
-        if (evalResult instanceof TemplateResult) {
-            this.evaluations = [...this.evaluations, evalResult];
-        } else {
-            const view = new JSONTreeView("", evalResult, undefined, undefined, /^[^_]/);
-            view.readonly = true;
-            this.evaluations = [...this.evaluations, view.dom];
-        }
+        this.evaluations = [result, ...this.evaluations];
+    }
 
-        if (input.value != this._inputHistory[this._inputHistory.length - 1]) {
-            this._inputHistory = [input.value, ...this._inputHistory];
-        }
-        input.value = "";
-        this.walkIndex = -1;
+    render() {
+        //language=HTML
+        return html`
+            <style>
+                * {
+                    box-sizing: border-box;
+                }
+            
+                :host {
+                    display: block;
+                    font-size: 14px;
+                    font-family: monospace;
+                    background: #252525;
+                    color: #bbb;
+                    flex-direction: column;
+                    flex-grow: 0;
+                    overflow: auto;     
+                }
+            </style>
+            
+            <div style="font-size: 14px; width: 450px; font-family: monospace; color: #bbb; display: flex; flex-direction: column; flex-grow: 0">
+                <div style="flex-grow: 1">
+                    <input @keypress="${this.submitInput}" @keydown="${this.walkHistory}" placeholder="help()" style="width: 100%; padding: 10px 5px; padding-left: 2ch; font-size: inherit; flex-shrink: 0; outline: none; background: inherit; border: none; color: #bbb"/>
+                </div>
+                <div style="flex-shrink: 1" .hidden="${!this.evaluations.length}">
+                    ${this.evaluations.map((it, index) => html`
+                        <div style="border-bottom: 1px solid rgba(0,0,0,.15); padding-left: 2ch">
+                            ${it}
+                        </div>
+                    `)}
+                </div>
+            </div>
+        `
     }
 
     private getCodeInput() {
@@ -129,190 +156,8 @@ class AppikConsole extends LitElement {
         }
     }
 
-    render() {
-        //language=HTML
-        return html`
-            <style>
-                * {
-                    box-sizing: border-box;
-                }
-            
-                :host {
-                    display: block;
-                    font-size: 14px;
-                    font-family: monospace;
-                    background: #454545;
-                    color: #bbb;
-                    display: flex;
-                    flex-direction: column;
-                    flex-grow: 0;
-                    overflow: auto;     
-                }
-            
-                .jsonView {
-                    margin-left: 20px;
-                    padding: 2px;
-                    cursor: default;
-                    color: rgb(156, 156, 156);
-                    white-space: nowrap;
-                    -webkit-user-select: none;
-                }
-
-                .jsonView > div {
-                    display: inline-block;
-                }
-
-                .jsonView.hidden {
-                    display: none;
-                }
-
-                .jsonView > .children, .jsonView.insert {
-                    display: block;
-                }
-
-                .jsonView > .name {
-                    color: rgb(172,101,180);
-                }
-
-                .jsonView > .separator:before {
-                    content: ":";
-                }
-
-                .jsonView > .separator {
-                    padding-right: 5px;
-                }
-
-                .jsonView > .spacing {
-                    display: inline-block;
-                    width: 15px;
-                }
-
-                .jsonView > .spacing::before {
-                    content: '1';
-                    visibility: hidden;
-                }
-
-                .jsonView > .value.null, .jsonView > .value.undefined {
-                    color: rgb(128, 128, 128);
-                }
-
-                .jsonView > .value.boolean, .jsonView > .value.number {
-                    color: rgb(50,133,207);
-                }
-
-                .jsonView > .value.string:not(.edit):before, .jsonView > .value.string:not(.edit):after {
-                    content: "\\" ";
-                }
-
-                .jsonView > .value.string {
-                    color: rgb(196, 26, 22);
-                }
-
-                .jsonView > .name:hover, .jsonView > .value:hover {
-                    background-color: rgba(56, 121, 217, 0.1);
-                }
-
-                .jsonView > .expand, .jsonView > .collapse {
-                    min-width: 20px;
-                    margin-left: -20px;
-                    cursor: pointer;
-                }
-
-                .jsonView > .expand:before {
-                    content: '\\25B6';
-                }
-
-                .jsonView > .collapse:before {
-                    content: '\\25BC';
-                }
-
-                .jsonView > .edit {
-                    padding: 0px 5px 0px 5px;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    background-color: transparent;
-                }
-
-                .jsonView > .edit br {
-                    display: none;
-                }
-
-                .jsonView > .edit * {
-                    display: inline;
-                    white-space: nowrap;
-                }
-
-                .jsonView > .value.edit {
-                    color: rgb(0, 0, 0);
-                }
-
-                .jsonView > .delete:before {
-                    content: '+';
-                    transform: rotate(45deg);
-                    -webkit-transform: rotate(45deg);
-                    -o-transform: rotate(45deg);
-                    -ms-transform: rotate(45deg);
-                    display: inline-block;
-                }
-
-                .jsonView > .delete {
-                    opacity: 0;
-                    display: inline;
-                    padding: 3px;
-                    cursor: pointer;
-                    color: rgb(150, 150, 150);
-                }
-
-                .jsonView > .item:hover ~ .delete {
-                    opacity: 1;
-                    color: rgb(150, 150, 150);
-                }
-
-                .jsonView > .delete:hover {
-                    opacity: 1;
-                    color: rgb(0, 0, 0);
-                    background: rgb(220, 220, 220);
-                }
-
-                .jsonView.readonly > .insert, .jsonView.readonly > .delete {
-                    display: none !important;
-                }
-
-                .jsonView > .insert:before {
-                    content: '+';
-                }
-
-                .jsonView > .insert {
-                    display: none;
-                    color: rgb(150, 150, 150);
-                    cursor: pointer;
-                }
-
-                .jsonView.expanded > .insert, .jsonView.expanded > .insert {
-                    display: inline-block;
-                    margin-left: 20px;
-                    padding: 3px;
-                }
-
-                .jsonView > .insert:hover {
-                    color: rgb(0, 0, 0);
-                    background: rgb(220, 220, 220);
-                }
-            </style>
-            
-            <div style="font-size: 14px; font-family: monospace; background: #454545; color: #bbb; display: flex; flex-direction: column; flex-grow: 0">
-                <div style="flex-shrink: 1" .hidden="${!this.evaluations.length}">
-                    ${this.evaluations.map(it => html`
-                        <div style="border-bottom: 1px solid rgba(0,0,0,.15); padding-left: 2ch">${it}</div>
-                    `)}
-                </div>
-                <div style="flex-grow: 1; width: 400px" @click="${() => this.renderRoot.querySelector("input").focus()}">
-                    <input @keypress="${this.evaluate}" @keydown="${this.walkHistory}" placeholder="help()" style="width: 100%; padding: 10px 5px; padding-left: 2ch; font-size: inherit; flex-shrink: 0; outline: none; background: inherit; border: none; color: #bbb"/>
-                </div>
-            </div>
-        `
-    }
-
 }
 
 customElements.define("appik-console", AppikConsole);
+
+export {AppikConsole}

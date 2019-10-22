@@ -6,6 +6,8 @@ export interface RouterInterface {
 
     subscribeRoutes(onchange: (info: RouteContext) => void): void;
 
+    getCurrentRoute(): RouteContext;
+
     /**
      * Build a link given a route alias
      *
@@ -21,6 +23,7 @@ export interface RouteMiddlewareCallback {
 };
 
 export interface RouterBuilderInterface extends RouterInterface {
+
 
     route(alias: string, path: string, ...middleware: (({routeContext, app}: RouteMiddlewareCallback, next?: () => any) => void)[]): void;
 }

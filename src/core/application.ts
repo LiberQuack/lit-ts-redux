@@ -44,6 +44,10 @@ class Application implements RouterInterface {
         return this._router.link(alias, params);
     }
 
+    getCurrentRoute(): RouteContext {
+        return this._router.getCurrentRoute();
+    }
+
     start(): void {
         (this._router as any)._startRouter(this);
     }

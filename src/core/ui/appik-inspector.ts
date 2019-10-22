@@ -1,8 +1,8 @@
 import {html, LitElement, property} from "lit-element";
 import {Application} from "../application";
-
 import "./appik-console";
-
+import "./data-viewer";
+import {AppikConsole} from "./appik-console";
 
 class AppikInspector extends LitElement {
 
@@ -30,11 +30,21 @@ class AppikInspector extends LitElement {
                     box-sizing: border-box;
                 }
                 
+                :host {
+                    font-family: Roboto, arial, sans-serif;
+                    color: #444;
+                    display: block;
+                    background: #4d4d4d;
+                    box-shadow: 0 5px 25px -5px rgba(0,0,0,.5);
+                    z-index: 15000;
+                    height: 100%;
+                }
+                
                 button {
                     cursor: pointer;
                     padding: 10px;
                     border: none;
-                    background: #aaa;
+                    background: #fff;
                     border-radius: 2px;
                     box-shadow: 0 2px 2px rgba(0,0,0,.45);
                     outline: none;
@@ -44,27 +54,21 @@ class AppikInspector extends LitElement {
                 button:focus, button:hover {
                     background: #fff;
                 }
-            
-                :host {
-                    font-family: Roboto, arial, sans-serif;
-                    color: #444;
-                    display: block;
-                    background: #555;
-                    box-shadow: 0 5px 25px -5px rgba(0,0,0,.5);
-                    z-index: 15000;
-                    height: 100%;
-                }
             </style>
             
             <div style="display: flex; height: 100%">
                 
                 <div style="flex-grow: 1; flex-shrink: 0;color: #bbb">
                     <div style="padding: 10px">
-                        <strong>Routes:</strong> 
+                        <div style="margin-bottom: 5px">
+                            <strong>Router</strong>
+                        </div> 
                         <div>
                             ${routeAliases.map(it => html`
-                                <button @click="${() => this._app.goTo(_router._routes[it])}" style="font-weight: ${it == this._app._router._currentRouteContext.alias ? 'bold' : 'normal'}">${it}</button>
+                                <button @click="${(() => this.inputGoTo(_router._routes[it]))}" style="font-weight: ${it == this._app._router._currentRouteContext.alias ? 'bold' : 'normal'}">${it}</button>
                             `)}
+                            <span>|</span>
+                            <button @click="${this.inputGetCurrentContext}">getCurrentRoute</button>
                         </div>
                     </div>
                     <div style="padding: 10px">
@@ -85,8 +89,20 @@ class AppikInspector extends LitElement {
         `;
     }
 
+    inputGoTo(path) {
+        this.getConsole().code = `application.goTo("${path}")`
+    }
+
     inputResourceCode(resourceName) {
-        this.renderRoot.querySelector(`appik-console`).resource = resourceName;
+        this.getConsole().code = `application.get("${resourceName}")`;
+    }
+
+    inputGetCurrentContext() {
+        this.getConsole().code = `application.getCurrentRoute()`
+    }
+
+    getConsole(): AppikConsole {
+        return this.renderRoot.querySelector(`appik-console`);
     }
 
     private getResources() {

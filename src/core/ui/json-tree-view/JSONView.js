@@ -11,7 +11,7 @@ module.exports = JSONTreeView;
 util.inherits(JSONTreeView, EE);
 
 
-function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
+function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = /^[^_]/){
 	var self = this;
 
 	if (typeof isRoot_ === 'undefined' && arguments.length < 4) {
@@ -26,14 +26,14 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 	}
 
 	var name, value, type, oldType = null, regexFilter = regexFilter, hidden = false,
-		readonly = parent_ ? parent_.readonly : false,
-		readonlyWhenFiltering = parent_ ? parent_.readonlyWhenFiltering : false,
+		readonly = false,
+		readonlyWhenFiltering = true,
 		alwaysShowRoot = false,
 		showCount = parent_ ? parent_.showCountOfObjectOrArray : true,
 		includingRootName = true,
 		domEventListeners = [], children = [], expanded = true,
 		edittingName = false, edittingValue = false,
-		nameEditable = true, valueEditable = true;
+		nameEditable = false, valueEditable = true;
 
 	var dom = {
 		container : document.createElement('div'),
@@ -42,9 +42,7 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 		separator : document.createElement('div'),
 		value : document.createElement('div'),
 		spacing: document.createElement('div'),
-		delete : document.createElement('div'),
 		children : document.createElement('div'),
-		insert : document.createElement('div')
 	};
 
 
@@ -90,7 +88,7 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 			set: function(ro) {
 				readonly = setBit(readonly, 0, +ro);
 				!!(readonly & 1) ? dom.container.classList.add('readonly')
-						: dom.container.classList.remove('readonly');
+					: dom.container.classList.remove('readonly');
 				for (var i in children) {
 					if (typeof children[i] === 'object') {
 						children[i].readonly = setBit(readonly, 0, +ro);
@@ -107,8 +105,8 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 				readonly = setBit(readonly, 1, +rowf);
 				readonlyWhenFiltering = rowf;
 				(readonly && this.filterText) || !!(readonly & 1)
-						? dom.container.classList.add('readonly')
-								: dom.container.classList.remove('readonly');
+					? dom.container.classList.add('readonly')
+					: dom.container.classList.remove('readonly');
 				for (var i in children) {
 					if (typeof children[i] === 'object') {
 						children[i].readonly = setBit(readonly, 1, +rowf);
@@ -125,7 +123,7 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 			set: function(h) {
 				hidden = h;
 				h ? dom.container.classList.add('hidden')
-						: dom.container.classList.remove('hidden');
+					: dom.container.classList.remove('hidden');
 				if (!h) {
 					parent_ && (parent_.hidden = h);
 				}
@@ -335,21 +333,18 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 	addDomEventListener(dom.name, 'click', itemClicked.bind(null, 'name'));
 	addDomEventListener(dom.name, 'blur', editFieldStop.bind(null, 'name'));
 	addDomEventListener(dom.name, 'keypress',
-			editFieldKeyPressed.bind(null, 'name'));
+		editFieldKeyPressed.bind(null, 'name'));
 	addDomEventListener(dom.name, 'keydown',
-			editFieldTabPressed.bind(null, 'name'));
+		editFieldTabPressed.bind(null, 'name'));
 
 	addDomEventListener(dom.value, 'dblclick', editField.bind(null, 'value'));
 	addDomEventListener(dom.value, 'click', itemClicked.bind(null, 'value'));
 	addDomEventListener(dom.value, 'blur', editFieldStop.bind(null, 'value'));
 	addDomEventListener(dom.value, 'keypress',
-			editFieldKeyPressed.bind(null, 'value'));
+		editFieldKeyPressed.bind(null, 'value'));
 	addDomEventListener(dom.value, 'keydown',
-			editFieldTabPressed.bind(null, 'value'));
+		editFieldTabPressed.bind(null, 'value'));
 	addDomEventListener(dom.value, 'keydown', numericValueKeyDown);
-
-	addDomEventListener(dom.insert, 'click', onInsertClick);
-	addDomEventListener(dom.delete, 'click', onDeleteClick);
 
 	setName(name_);
 	setValue(value_);
@@ -360,8 +355,8 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 			j++;
 		}
 		return i >= j
-				? (n | +b << i )
-						: (n >> (i + 1) << (i + 1)) | (n % (n >> i << i)) | (+b << i);
+			? (n | +b << i )
+			: (n >> (i + 1) << (i + 1)) | (n % (n >> i << i)) | (+b << i);
 	}
 
 
@@ -411,12 +406,11 @@ function JSONTreeView(name_, value_, parent_, isRoot_, regexFilter = null){
 
 	function getObjProps(value) {
 		const props = [
-			...new Set([...Object.keys(value),
-			...[
+			...new Set([
 				...Object.entries(Object.getOwnPropertyDescriptors(value)),
 				...Object.entries(Object.getOwnPropertyDescriptors(Object.getPrototypeOf(value))),
-			].filter(it => it[1].get || it[1].value).map(it => it[0])
-		])].filter(it => it !== "constructor");
+			])
+		].filter(it => it[1].get || it[1].value).map(it => it[0]).filter(it => ["constructor", "hasOwnProperty", "isPrototypeOf", "propertyIsEnumerable", "toLocaleString", "toString", "valueOf"].indexOf(it) === -1);
 
 		props.sort((a, b) => a.localeCompare(b))
 

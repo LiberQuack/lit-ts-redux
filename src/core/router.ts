@@ -66,6 +66,11 @@ class Router implements RouterBuilderInterface {
     runSubscriptions(routeContext: RouteContext) {
         this._routeSubscriptions.forEach(callback => callback(routeContext));
     }
+
+    getCurrentRoute(): RouteContext {
+        return this._currentRouteContext;
+    }
+
 }
 
 export {Router};
