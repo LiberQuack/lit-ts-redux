@@ -1,12 +1,11 @@
-import {customElement, html, property} from "lit-element";
-import {Person} from "../../application/definitions/person";
+import {customElement, html} from "lit-element";
 import {PageElement} from "../page-element";
+import {app} from "../../application/app";
 
 @customElement("page-form")
 class FormPage extends PageElement {
 
-    @property()
-    person = Person.model().subscribe(() => this.requestUpdate());
+    person = app.resources.get("personDefinition").subscribe(() => this.requestUpdate());
 
     protected render() {
         const {person} = this;
@@ -37,8 +36,8 @@ class FormPage extends PageElement {
                         <div><strong>Model valid</strong>:<br> ${person.valid}</div><br>
                         <div><strong>Plain Obj:</strong></div>
                         <pre>${
-                            JSON.stringify(person.plainObj(), null, 2)
-                        }</pre>
+            JSON.stringify(person.plainObj(), null, 2)
+        }</pre>
                     </div>
                     
                 </div>

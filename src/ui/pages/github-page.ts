@@ -7,11 +7,6 @@ const USER_URL_PART = "https://api.github.com/users";
 @customElement("page-github")
 class RequestPage extends PageElement {
 
-    constructor() {
-        super();
-        this.subscribe("ghUserReq", new HttpRequest());
-    }
-
     //language=HTML
     protected render() {
         const ghUserReq = this.ghUserReq as HttpRequest;

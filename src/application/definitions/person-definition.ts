@@ -1,6 +1,6 @@
 import {Definition} from "../../core/_definition";
 
-const Person = new Definition().configure((define, validate, plainObjEnricher) => {
+const PersonDefinition = new Definition().configure((define, validate, plainObjEnricher) => {
 
     define("name", {
         type: String,
@@ -53,4 +53,4 @@ const Person = new Definition().configure((define, validate, plainObjEnricher) =
 
 });
 
-export {Person}
+export {PersonDefinition}

@@ -113,7 +113,7 @@ class AppikConsole extends LitElement {
             
             <div style="font-size: 14px; width: 450px; font-family: monospace; color: #bbb; display: flex; flex-direction: column; flex-grow: 0">
                 <div style="flex-grow: 1">
-                    <input @keypress="${this.submitInput}" @keydown="${this.walkHistory}" placeholder="help()" style="width: 100%; padding: 10px 5px; padding-left: 2ch; font-size: inherit; flex-shrink: 0; outline: none; background: inherit; border: none; color: #bbb"/>
+                    <input spellcheck="false" @keypress="${this.submitInput}" @keydown="${this.walkHistory}" placeholder="help()" style="width: 100%; padding: 10px 5px; padding-left: 2ch; font-size: inherit; flex-shrink: 0; outline: none; background: inherit; border: none; color: #bbb"/>
                 </div>
                 <div style="flex-shrink: 1" .hidden="${!this.evaluations.length}">
                     ${this.evaluations.map((it, index) => html`

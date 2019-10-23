@@ -10,17 +10,17 @@ class AppikInspector extends LitElement {
 
     @property()
     set app(app: Application) {
-        app.subscribeResourceChanges(() => this.requestUpdate());
-        app.subscribeRoutes(() => this.requestUpdate());
+        app.resources.subscribe(() => this.requestUpdate());
+        app.router.subscribe(() => this.requestUpdate());
         this._app = app;
     }
 
     render() {
         //language=HTML
-        const {_router} = this._app;
+        const {router} = this._app;
         const resources = this.getResources();
 
-        const routeAliases = Object.keys(_router._routes);
+        const routeAliases = Object.keys(router._routes);
         const resourceAliases = Object.keys(resources);
 
         return html`
@@ -65,7 +65,7 @@ class AppikInspector extends LitElement {
                         </div> 
                         <div>
                             ${routeAliases.map(it => html`
-                                <button @click="${(() => this.inputGoTo(_router._routes[it]))}" style="font-weight: ${it == this._app._router._currentRouteContext.alias ? 'bold' : 'normal'}">${it}</button>
+                                <button @click="${(() => this.inputGoTo(router._routes[it]))}" style="font-weight: ${it == this._app.router.getCurrentContext().alias ? 'bold' : 'normal'}">${it}</button>
                             `)}
                             <span>|</span>
                             <button @click="${this.inputGetCurrentContext}">getCurrentRoute</button>
@@ -90,15 +90,15 @@ class AppikInspector extends LitElement {
     }
 
     inputGoTo(path) {
-        this.getConsole().code = `application.goTo("${path}")`
+        this.getConsole().code = `application.router.goTo("${path}")`
     }
 
     inputResourceCode(resourceName) {
-        this.getConsole().code = `application.get("${resourceName}")`;
+        this.getConsole().code = `application.resources.get("${resourceName}")`;
     }
 
     inputGetCurrentContext() {
-        this.getConsole().code = `application.getCurrentRoute()`
+        this.getConsole().code = `application.router.getCurrentContext()`
     }
 
     getConsole(): AppikConsole {
@@ -106,7 +106,7 @@ class AppikInspector extends LitElement {
     }
 
     private getResources() {
-        return this._app._resourceManager._resources;
+        return this._app.resources.get();
     }
 }
 

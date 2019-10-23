@@ -4,9 +4,9 @@ import {Application} from "./application";
 export interface RouterInterface {
     goTo(path: string): void;
 
-    subscribeRoutes(onchange: (info: RouteContext) => void): void;
+    subscribe(onchange: (info: RouteContext) => void): void;
 
-    getCurrentRoute(): RouteContext;
+    getCurrentContext(): RouteContext;
 
     /**
      * Build a link given a route alias

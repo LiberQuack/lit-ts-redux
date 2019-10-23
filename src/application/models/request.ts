@@ -1,7 +1,7 @@
-import {Subscribable} from "../../core/subscribable";
+import {Subject} from "../../core/subject";
 
 
-class HttpRequest<T = any> extends Subscribable {
+class HttpRequest<T = any> extends Subject {
 
     url = "";
     loading = false;
@@ -64,10 +64,6 @@ class HttpRequest<T = any> extends Subscribable {
                     this.loading = false;
                 }
             });
-    }
-
-    protected _registerWatchedProperties(): string[] {
-        return ["loading", "done", "error", "responseBody", "errorBody", "status", "url"];
     }
 
 }

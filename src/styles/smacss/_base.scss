@@ -42,15 +42,13 @@ input {
 }
 
 button, input[type=submit] {
-  background-color: #e1e1e1;
+  background-color: #ffffff;
+  color: black;
+  padding: 10px;
   border: none;
+  border-radius: 2px;
 }
 
 [hidden] {
-  display: none !important;
-}
-
-
-dom-if, dom-repeat {
   display: none !important;
 }

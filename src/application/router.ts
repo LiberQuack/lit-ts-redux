@@ -1,19 +1,17 @@
 import {Application} from "../core/application";
 import {Counter} from "./models/counter";
+import {PersonDefinition} from "./definitions/person-definition";
 
 const router = new Application.Router();
 
-router.route("form", "/form-page", async ({routeContext}) => {
-    await import("../ui/pages/form-page");
+router.route("counter", "/counter-page", async ({app, routeContext}) => {
+    await import("../ui/pages/counter-page");
 });
 
-router.route("counter", "/counter-page", async ({app, routeContext}) => {
-    if (!app.get("counter")) {
-        const counter = new Counter(500);
-        app.set("counter", counter);
-    }
+router.route("form", "/form-page", async ({app, routeContext}) => {
+    app.resources.set("personDefinition", PersonDefinition.model());
 
-    await import("../ui/pages/counter-page");
+    await import("../ui/pages/form-page");
 });
 
 router.route("github", "/github-page", async ({app, routeContext}) => {

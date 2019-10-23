@@ -1,14 +1,18 @@
-import {Subscribable} from "./subscribable";
+import {Subject} from "./subject";
 
-class ResourceManager extends Subscribable {
+class ResourceManager extends Subject {
 
-    private _resources = {} as {[x:string]:any};
+    private _resources = {} as Resources;
 
     _registerWatchedProperties(): string[] {
         return ["_resources"];
     }
 
-    get(resourcePath: string): any {
+    get(resourcePath?: string): any|Resources {
+        if (!resourcePath) {
+            return {...this._resources}
+        }
+
         return this._resources[resourcePath];
     }
 
@@ -24,4 +28,6 @@ class ResourceManager extends Subscribable {
 
 }
 
-export {ResourceManager};
+type Resources = { [x: string]: any };
+
+export {ResourceManager, Resources};

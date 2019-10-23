@@ -1,6 +1,5 @@
 import {customElement, html} from "lit-element";
 import {PageElement} from "../page-element";
-import {HttpRequest} from "../../application/models/request";
 
 @customElement("page-404")
 class NotFoundPage extends PageElement {

@@ -5,7 +5,7 @@ abstract class PageElement extends SimpleElement {
 
     constructor() {
         super();
-        app.subscribeRoutes((routeContext) => {
+        app.router.subscribe((routeContext) => {
             const matchRoute = routeContext.alias === this.getRouteName();
             this.style.display = matchRoute ? '' : 'none';
         })

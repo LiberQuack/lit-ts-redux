@@ -98,7 +98,7 @@ class DataViewer extends LitElement {
                 }
 
                 .jsonView > .edit {
-                    padding: 0px 5px 0px 5px;
+                    padding: 0 5px 0 5px;
                     white-space: nowrap;
                     overflow: hidden;
                     background-color: transparent;

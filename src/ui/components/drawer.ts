@@ -7,9 +7,9 @@ class Drawer extends LitElement {
 
     render() {
         return html`
-            <a class="drawer--item" href="${app.link("counter")}">Counter</a>
-            <a class="drawer--item" href="${app.link("form")}">Form</a>
-            <a class="drawer--item" href="${app.link("github")}">Github Stats</a>
+            <a class="drawer--item" href="${app.router.link("counter")}">Counter</a>
+            <a class="drawer--item" href="${app.router.link("form")}">Form</a>
+            <a class="drawer--item" href="${app.router.link("github")}">Github Stats</a>
             <span class="drawer--item" @click="${() => openAppikInspector(app)}">Open Inspector</span>            
         `;
     }

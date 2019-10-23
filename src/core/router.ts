@@ -25,10 +25,6 @@ class Router implements RouterBuilderInterface {
         page(queryObjectMiddeware);
     }
 
-    get started(): boolean {
-        return this._started
-    }
-
     goTo(path: string): void {
         page(path);
     }
@@ -51,7 +47,7 @@ class Router implements RouterBuilderInterface {
         }))
     }
 
-    subscribeRoutes(onchange: (info: RouteContext) => void): void {
+    subscribe(onchange: (info: RouteContext) => void): void {
         this._routeSubscriptions.push(onchange);
         if (this._started) {
             onchange(this._currentRouteContext);
@@ -67,7 +63,7 @@ class Router implements RouterBuilderInterface {
         this._routeSubscriptions.forEach(callback => callback(routeContext));
     }
 
-    getCurrentRoute(): RouteContext {
+    getCurrentContext(): RouteContext {
         return this._currentRouteContext;
     }
 
