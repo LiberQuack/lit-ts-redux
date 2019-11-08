@@ -8,7 +8,7 @@ import "../components/counter-element";
 class CounterPage extends PageElement {
 
     @property()
-    counters = [new Counter(100), new Counter(100)];
+    counters = [undefined, new Counter(100)];
 
     protected render() {
         //language=HTML

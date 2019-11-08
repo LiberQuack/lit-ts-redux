@@ -1,10 +1,11 @@
 import {Application} from "../core/application";
-import {Counter} from "./models/counter";
 import {PersonDefinition} from "./definitions/person-definition";
+import {Counter} from "./models/counter";
 
 const router = new Application.Router();
 
 router.route("counter", "/counter-page", async ({app, routeContext}) => {
+    app.resources.set("counter", new Counter());
     await import("../ui/pages/counter-page");
 });
 

@@ -1,15 +1,18 @@
-import {customElement, html, property} from "lit-element";
+import {customElement, html} from "lit-element";
 import {Counter} from "../../application/models/counter";
-import {SimpleElement, watch} from "../simple-element";
+import {SimpleElement, watching} from "../simple-element";
 
 @customElement("counter-element")
+@watching
 class CounterElement extends SimpleElement {
 
-    @watch
-    counter = new Counter();
+    counter: Counter = undefined;
 
     protected render() {
-        //language=HTML
+        if (!this.counter) {
+            return html`<div>No model attached</div>`
+        }
+
         return html`
             <div>
                 <div>

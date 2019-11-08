@@ -35,48 +35,68 @@ function watchable(target, propertyKey) {
 
 }
 
-function watch(callback: Function) {
-    return function (target, propertyKey) {
+const litMethods = [
+    "_updateState",
+    "_instanceProperties",
+    "_updatePromise",
+    "_hasConnectedResolver",
+    "_changedProperties",
+    "_reflectingProperties",
+    "renderRoot"
+];
 
-        const originalDescriptor = Object.getOwnPropertyDescriptor(target, propertyKey);
+function watching(callback) {
 
-        if (originalDescriptor && originalDescriptor.set) {
-            const originalSet = originalDescriptor.set;
-            Object.defineProperty(target, propertyKey, {
-                ...originalDescriptor,
-                set(v: Subject) {
-                    if (!(v instanceof Subject)) {
-                        console.warn("Cannot listen to not subscribable instances");
-                        originalSet.apply(this, v);
+    return function <T extends { new(...constructorArgs: any[]) }>(constructorFunction: T) {
+
+        return class extends constructorFunction {
+
+            constructor(...args) {
+                super(...args);
+
+                const target = this;
+                const descriptors = Object.getOwnPropertyDescriptors(this);
+
+                Object.keys(descriptors).filter(propName => litMethods.indexOf(propName) === -1).forEach((propName) => {
+
+                    const originalDescriptor = descriptors[propName];
+
+                    if (originalDescriptor && originalDescriptor.set) {
+                        const originalSet = originalDescriptor.set;
+                        Object.defineProperty(target, propName, {
+                            ...originalDescriptor,
+                            set(v: Subject) {
+                                if (!(v instanceof Subject)) {
+                                    originalSet.apply(this, v);
+                                } else {
+                                    const oldVal = this[propName];
+                                    if (oldVal instanceof Subject) v.unsubscribe(this);
+                                    originalSet.apply(this, [v]);
+                                    v.subscribe(callback.bind(this));
+                                }
+                            }
+                        })
                     } else {
-                        const oldVal = this[propertyKey];
-                        if (oldVal instanceof Subject) v.unsubscribe(this);
-                        originalSet.apply(this, [v]);
-                        v.subscribe(callback.bind(this));
+                        const privKey = `__${propName}`;
+                        Object.defineProperty(target, propName, {
+                            get() {
+                                return this[privKey];
+                            },
+                            set(v: any): void {
+                                if (!(v instanceof Subject)) {
+                                    this[privKey] = v;
+                                } else {
+                                    const oldVal = this[propName];
+                                    if (oldVal instanceof Subject) v.unsubscribe(this);
+                                    this[privKey] = v.subscribe(callback.bind(this));
+                                }
+                            }
+                        })
                     }
-                }
-            })
-        } else {
-            const privKey = `__${propertyKey}`;
-            Object.defineProperty(target, propertyKey, {
-                get() {
-                    return this[privKey];
-                },
-                set(v: any): void {
-                    if (!(v instanceof Subject)) {
-                        console.warn("Cannot listen to not subscribable instances");
-                        this[privKey] = v;
-                    } else {
-                        const oldVal = this[propertyKey];
-                        if (oldVal instanceof Subject) v.unsubscribe(this);
-                        this[privKey] = v.subscribe(callback.bind(this));
-                    }
-                }
-
-            })
-
+                })
+            }
         }
     }
 }
 
-export {Subject, watchable, watch};
+export {Subject, watchable, watching};

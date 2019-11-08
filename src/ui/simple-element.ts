@@ -1,7 +1,9 @@
 import {LitElement} from "lit-element";
-import {watch as libWatch} from "../core/subject";
+import {watching as libWatching} from "../core/subject";
 
-const watch = libWatch(function() {this.requestUpdate()});
+const watching = libWatching(function () {
+    this.requestUpdate()
+});
 
 abstract class SimpleElement extends LitElement {
 
@@ -11,4 +13,4 @@ abstract class SimpleElement extends LitElement {
 
 }
 
-export { SimpleElement, watch }
+export { SimpleElement, watching }
